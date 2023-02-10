@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+// TextTheme
 TextTheme kAppTextTheme = TextTheme(
   headline1: GoogleFonts.montserrat(
       fontSize: 97, fontWeight: FontWeight.w300, letterSpacing: -1.5),
@@ -27,3 +28,8 @@ TextTheme kAppTextTheme = TextTheme(
   overline: GoogleFonts.roboto(
       fontSize: 10, fontWeight: FontWeight.w400, letterSpacing: 1.5),
 );
+
+// Color constants
+Color kPrimaryColor = const Color(0xFF292F36);
+Color kSecondaryColor = const Color(0xFFF2CF66);
+Color kAccentColor = const Color(0xFFF28966);
