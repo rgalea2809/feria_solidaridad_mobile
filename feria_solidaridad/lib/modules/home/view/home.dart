@@ -24,7 +24,10 @@ class Home extends StatelessWidget {
                       color: Colors.white,
                     ),
               ),
-              background: const FlutterLogo(),
+              background: Image.asset(
+                "assets/images/home_hero.png",
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           SliverToBoxAdapter(
