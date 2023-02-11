@@ -52,20 +52,6 @@ class Home extends StatelessWidget {
               ),
             ),
           ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
-                return Container(
-                  color: Colors.transparent,
-                  height: 100.0,
-                  child: Center(
-                    child: Text('$index', textScaleFactor: 5),
-                  ),
-                );
-              },
-              childCount: 20,
-            ),
-          ),
         ],
       ),
     );
