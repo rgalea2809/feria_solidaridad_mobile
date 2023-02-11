@@ -136,7 +136,7 @@ class HomeWelcomeSection extends StatelessWidget {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       // TODO: Change this String to actual paragraph
-                      child: Text(
+                      child: const Text(
                         kLoremParagraph,
                         textAlign: TextAlign.start,
                       ),
@@ -200,7 +200,7 @@ class HomeYoutubeVideo extends StatelessWidget {
     return YoutubePlayer(
       controller: _controller,
       showVideoProgressIndicator: true,
-      progressColors: ProgressBarColors(
+      progressColors: const ProgressBarColors(
         playedColor: kPrimaryColor,
         handleColor: kSecondaryColor,
       ),
