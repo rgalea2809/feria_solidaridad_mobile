@@ -1,3 +1,4 @@
+import 'package:feria_solidaridad/constants/app_constants.dart';
 import 'package:feria_solidaridad/constants/debug_constants.dart';
 import 'package:feria_solidaridad/constants/theme_constants.dart';
 import 'package:flutter/material.dart';
@@ -187,7 +188,7 @@ class HomeYoutubeVideo extends StatelessWidget {
   HomeYoutubeVideo({super.key});
 
   final YoutubePlayerController _controller = YoutubePlayerController(
-    initialVideoId: 'cva1fD2dKt0',
+    initialVideoId: kRectorVideoId,
     flags: const YoutubePlayerFlags(
       autoPlay: false,
       mute: false,

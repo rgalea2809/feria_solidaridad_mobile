@@ -30,6 +30,6 @@ TextTheme kAppTextTheme = TextTheme(
 );
 
 // Color constants
-Color kPrimaryColor = const Color(0xFF292F36);
-Color kSecondaryColor = const Color(0xFFF2CF66);
-Color kAccentColor = const Color(0xFFF28966);
+const Color kPrimaryColor = Color(0xFF292F36);
+const Color kSecondaryColor = Color(0xFFF2CF66);
+const Color kAccentColor = Color(0xFFF28966);
