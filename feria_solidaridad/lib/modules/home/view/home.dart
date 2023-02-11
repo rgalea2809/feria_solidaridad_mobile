@@ -1,6 +1,7 @@
 import 'package:feria_solidaridad/constants/app_constants.dart';
 import 'package:feria_solidaridad/constants/debug_constants.dart';
 import 'package:feria_solidaridad/constants/theme_constants.dart';
+import 'package:feria_solidaridad/utils/dummy_data.dart';
 import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -35,24 +36,64 @@ class Home extends StatelessWidget {
                     children: [
                       Container(
                         padding: const EdgeInsets.symmetric(
-                            vertical: 32.0, horizontal: 8.0),
+                            vertical: 32.0, horizontal: 0),
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Text(
-                              "Un mensaje del Rector",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline6
-                                  ?.copyWith(
-                                    color: kAccentColor,
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  Text(
+                                    "Un mensaje del Rector",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headline6
+                                        ?.copyWith(
+                                          color: kAccentColor,
+                                        ),
                                   ),
+                                  const SizedBox(
+                                    height: 16.0,
+                                  ),
+                                  HomeYoutubeVideo(),
+                                ],
+                              ),
                             ),
                             const SizedBox(
-                              height: 16.0,
+                              height: 32.0,
                             ),
-                            HomeYoutubeVideo(),
+                            Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Container(
+                                  constraints:
+                                      const BoxConstraints(maxHeight: 150),
+                                  child: PageView.builder(
+                                    padEnds: false,
+                                    pageSnapping: false,
+                                    controller: PageController(
+                                      viewportFraction: 0.33,
+                                    ),
+                                    itemBuilder: (context, index) {
+                                      return AspectRatio(
+                                        aspectRatio: 1,
+                                        child: Container(
+                                          color: index % 2 == 0
+                                              ? Colors.red
+                                              : Colors.blue,
+                                          margin: const EdgeInsets.all(8.0),
+                                          child: Text(index.toString()),
+                                        ),
+                                      );
+                                    },
+                                    itemCount: 5,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ],
                         ),
                       ),
