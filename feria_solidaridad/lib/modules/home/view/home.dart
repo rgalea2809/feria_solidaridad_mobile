@@ -1,6 +1,7 @@
 import 'package:feria_solidaridad/constants/debug_constants.dart';
 import 'package:feria_solidaridad/constants/theme_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -47,6 +48,10 @@ class Home extends StatelessWidget {
                                     color: kAccentColor,
                                   ),
                             ),
+                            const SizedBox(
+                              height: 16.0,
+                            ),
+                            HomeYoutubeVideo(),
                           ],
                         ),
                       ),
@@ -173,6 +178,30 @@ class HomeWelcomeSection extends StatelessWidget {
             )
           ],
         ),
+      ),
+    );
+  }
+}
+
+class HomeYoutubeVideo extends StatelessWidget {
+  HomeYoutubeVideo({super.key});
+
+  final YoutubePlayerController _controller = YoutubePlayerController(
+    initialVideoId: 'cva1fD2dKt0',
+    flags: const YoutubePlayerFlags(
+      autoPlay: false,
+      mute: false,
+    ),
+  );
+
+  @override
+  Widget build(BuildContext context) {
+    return YoutubePlayer(
+      controller: _controller,
+      showVideoProgressIndicator: true,
+      progressColors: ProgressBarColors(
+        playedColor: kPrimaryColor,
+        handleColor: kSecondaryColor,
       ),
     );
   }
