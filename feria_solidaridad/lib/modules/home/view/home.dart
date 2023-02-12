@@ -2,6 +2,7 @@ import 'package:feria_solidaridad/constants/app_constants.dart';
 import 'package:feria_solidaridad/constants/debug_constants.dart';
 import 'package:feria_solidaridad/constants/theme_constants.dart';
 import 'package:feria_solidaridad/utils/dummy_data.dart';
+import 'package:feria_solidaridad/widgets/image_gallery_scroller.dart';
 import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -68,29 +69,13 @@ class Home extends StatelessWidget {
                             Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Container(
-                                  constraints:
-                                      const BoxConstraints(maxHeight: 150),
-                                  child: PageView.builder(
-                                    padEnds: false,
-                                    pageSnapping: false,
-                                    controller: PageController(
-                                      viewportFraction: 0.33,
-                                    ),
-                                    itemBuilder: (context, index) {
-                                      return AspectRatio(
-                                        aspectRatio: 1,
-                                        child: Container(
-                                          color: index % 2 == 0
-                                              ? Colors.red
-                                              : Colors.blue,
-                                          margin: const EdgeInsets.all(8.0),
-                                          child: Text(index.toString()),
-                                        ),
-                                      );
-                                    },
-                                    itemCount: 5,
-                                  ),
+                                ImageGalleryScroller(
+                                  imageUrls: ["", "asd", "", "", ""],
+                                  delay: Duration(),
+                                ),
+                                ImageGalleryScroller(
+                                  imageUrls: ["", "asd", "", "", ""],
+                                  delay: Duration(milliseconds: 2500),
                                 ),
                               ],
                             ),
