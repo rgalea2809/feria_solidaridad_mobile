@@ -68,7 +68,7 @@ class Home extends StatelessWidget {
                             ),
                             Column(
                               mainAxisSize: MainAxisSize.min,
-                              children: [
+                              children: const [
                                 ImageGalleryScroller(
                                   imageUrls: ["", "asd", "", "", ""],
                                   delay: Duration(),

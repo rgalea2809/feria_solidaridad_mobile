@@ -59,10 +59,13 @@ class _ImageGalleryScrollerState extends State<ImageGalleryScroller> {
           return AspectRatio(
             aspectRatio: 1,
             child: Container(
-              color: index % 2 == 0 ? Colors.red : Colors.blue,
               margin: const EdgeInsets.all(8.0),
+              decoration: BoxDecoration(
+                color: index % 2 == 0 ? Colors.red : Colors.blue,
+                borderRadius: BorderRadius.circular(20),
+              ),
               child: Text(
-                  widget.imageUrls[index]), // TODO CHange to network image,
+                  widget.imageUrls[index]), // TODO Change to network image,
             ),
           );
         },
