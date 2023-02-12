@@ -1,7 +1,6 @@
 import 'package:feria_solidaridad/constants/app_constants.dart';
 import 'package:feria_solidaridad/constants/debug_constants.dart';
 import 'package:feria_solidaridad/constants/theme_constants.dart';
-import 'package:feria_solidaridad/utils/dummy_data.dart';
 import 'package:feria_solidaridad/widgets/image_gallery_scroller.dart';
 import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
