@@ -1,6 +1,7 @@
 import 'package:feria_solidaridad/constants/app_constants.dart';
 import 'package:feria_solidaridad/constants/debug_constants.dart';
 import 'package:feria_solidaridad/constants/theme_constants.dart';
+import 'package:feria_solidaridad/modules/home/model/social_link_data.dart';
 import 'package:feria_solidaridad/widgets/image_gallery_scroller.dart';
 import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
@@ -10,13 +11,22 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       backgroundColor: kPrimaryColor,
       body: CustomScrollView(
         slivers: [
           HomeAppBar(),
           HomeWelcomeSection(),
           HomeMediaSection(),
+          HomeFooter(
+            socialLinks: [
+              SocialLinkData(
+                url: "facebook.com/ucaserviciosocial",
+                icon: Icon(Icons.facebook),
+                displayName: "Facebook/UcaServicioSocial",
+              ),
+            ],
+          ),
         ],
       ),
     );
@@ -139,30 +149,6 @@ class HomeWelcomeSection extends StatelessWidget {
   }
 }
 
-class HomeYoutubeVideo extends StatelessWidget {
-  HomeYoutubeVideo({super.key});
-
-  final YoutubePlayerController _controller = YoutubePlayerController(
-    initialVideoId: kRectorVideoId,
-    flags: const YoutubePlayerFlags(
-      autoPlay: false,
-      mute: false,
-    ),
-  );
-
-  @override
-  Widget build(BuildContext context) {
-    return YoutubePlayer(
-      controller: _controller,
-      showVideoProgressIndicator: true,
-      progressColors: const ProgressBarColors(
-        playedColor: kPrimaryColor,
-        handleColor: kSecondaryColor,
-      ),
-    );
-  }
-}
-
 class HomeMediaSection extends StatelessWidget {
   const HomeMediaSection({super.key});
 
@@ -268,6 +254,107 @@ class HomeMediaSection extends StatelessWidget {
             ),
           )
         ],
+      ),
+    );
+  }
+}
+
+class HomeYoutubeVideo extends StatelessWidget {
+  HomeYoutubeVideo({super.key});
+
+  final YoutubePlayerController _controller = YoutubePlayerController(
+    initialVideoId: kRectorVideoId,
+    flags: const YoutubePlayerFlags(
+      autoPlay: false,
+      mute: false,
+    ),
+  );
+
+  @override
+  Widget build(BuildContext context) {
+    return YoutubePlayer(
+      controller: _controller,
+      showVideoProgressIndicator: true,
+      progressColors: const ProgressBarColors(
+        playedColor: kPrimaryColor,
+        handleColor: kSecondaryColor,
+      ),
+    );
+  }
+}
+
+class HomeFooter extends StatelessWidget {
+  const HomeFooter({super.key, required this.socialLinks});
+
+  final List<SocialLinkData> socialLinks;
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Container(
+        decoration: const BoxDecoration(
+          color: kPrimaryColor,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20.0),
+            topRight: Radius.circular(20.0),
+          ),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 32.0, horizontal: 8.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Text(
+                        "¿Busca más información?",
+                        style: Theme.of(context).textTheme.headline6?.copyWith(
+                              color: kSecondaryColor,
+                            ),
+                      ),
+                      Text(
+                        "Contáctenos",
+                        style: Theme.of(context).textTheme.overline?.copyWith(
+                              color: Colors.white,
+                            ),
+                      ),
+                      const SizedBox(
+                        height: 16.0,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 8.0,
+                  ),
+                  ...socialLinks.map<Widget>(
+                    (e) {
+                      return Row(
+                        children: [
+                          e.icon,
+                          const SizedBox(
+                            width: 4.0,
+                          ),
+                          Text(
+                            e.displayName ?? e.url,
+                            style: Theme.of(context).textTheme.button?.copyWith(
+                                color: Colors.white,
+                                decoration: TextDecoration.underline),
+                          ),
+                        ],
+                      );
+                    },
+                  ).toList(),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
