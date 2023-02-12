@@ -60,6 +60,26 @@ class Home extends StatelessWidget {
                                     height: 16.0,
                                   ),
                                   HomeYoutubeVideo(),
+                                  const SizedBox(
+                                    height: 16.0,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: Text(
+                                      "\"$kLoremParagraph\"",
+                                      style:
+                                          Theme.of(context).textTheme.subtitle1,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 8.0,
+                                  ),
+                                  Text(
+                                    "P. Andreu Oliva",
+                                    style: Theme.of(context).textTheme.overline,
+                                    textAlign: TextAlign.center,
+                                  ),
                                 ],
                               ),
                             ),
@@ -68,12 +88,25 @@ class Home extends StatelessWidget {
                             ),
                             Column(
                               mainAxisSize: MainAxisSize.min,
-                              children: const [
-                                ImageGalleryScroller(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    "Galería de imágenes",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headline6
+                                        ?.copyWith(
+                                          color: kAccentColor,
+                                        ),
+                                  ),
+                                ),
+                                const ImageGalleryScroller(
                                   imageUrls: ["", "asd", "", "", ""],
                                   delay: Duration(),
                                 ),
-                                ImageGalleryScroller(
+                                const ImageGalleryScroller(
                                   imageUrls: ["", "asd", "", "", ""],
                                   delay: Duration(milliseconds: 2500),
                                 ),
