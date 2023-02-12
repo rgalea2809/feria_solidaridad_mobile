@@ -11,116 +11,13 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       backgroundColor: kPrimaryColor,
       body: CustomScrollView(
         slivers: [
-          const HomeAppBar(),
-          const HomeWelcomeSection(),
-          SliverToBoxAdapter(
-            child: Stack(
-              children: [
-                Container(
-                  color: kPrimaryColor,
-                ),
-                Container(
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20.0),
-                      topRight: Radius.circular(20.0),
-                    ),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 32.0, horizontal: 0),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  Text(
-                                    "Un mensaje del Rector",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headline6
-                                        ?.copyWith(
-                                          color: kAccentColor,
-                                        ),
-                                  ),
-                                  const SizedBox(
-                                    height: 16.0,
-                                  ),
-                                  HomeYoutubeVideo(),
-                                  const SizedBox(
-                                    height: 16.0,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(16.0),
-                                    child: Text(
-                                      "\"$kLoremParagraph\"",
-                                      style:
-                                          Theme.of(context).textTheme.subtitle1,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 8.0,
-                                  ),
-                                  Text(
-                                    "P. Andreu Oliva",
-                                    style: Theme.of(context).textTheme.overline,
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 32.0,
-                            ),
-                            Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    "Galería de imágenes",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headline6
-                                        ?.copyWith(
-                                          color: kAccentColor,
-                                        ),
-                                  ),
-                                ),
-                                const ImageGalleryScroller(
-                                  imageUrls: ["", "asd", "", "", ""],
-                                  delay: Duration(),
-                                ),
-                                const ImageGalleryScroller(
-                                  imageUrls: ["", "asd", "", "", ""],
-                                  delay: Duration(milliseconds: 2500),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
+          HomeAppBar(),
+          HomeWelcomeSection(),
+          HomeMediaSection(),
         ],
       ),
     );
@@ -262,6 +159,116 @@ class HomeYoutubeVideo extends StatelessWidget {
       progressColors: const ProgressBarColors(
         playedColor: kPrimaryColor,
         handleColor: kSecondaryColor,
+      ),
+    );
+  }
+}
+
+class HomeMediaSection extends StatelessWidget {
+  const HomeMediaSection({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Stack(
+        children: [
+          Container(
+            color: kPrimaryColor,
+          ),
+          Container(
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20.0),
+                topRight: Radius.circular(20.0),
+              ),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 32.0, horizontal: 0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Text(
+                              "Un mensaje del Rector",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline6
+                                  ?.copyWith(
+                                    color: kAccentColor,
+                                  ),
+                            ),
+                            const SizedBox(
+                              height: 16.0,
+                            ),
+                            HomeYoutubeVideo(),
+                            const SizedBox(
+                              height: 16.0,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Text(
+                                "\"$kLoremParagraph\"",
+                                style: Theme.of(context).textTheme.subtitle1,
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 8.0,
+                            ),
+                            Text(
+                              "P. Andreu Oliva",
+                              style: Theme.of(context).textTheme.overline,
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 32.0,
+                      ),
+                      Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              "Galería de imágenes",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline6
+                                  ?.copyWith(
+                                    color: kAccentColor,
+                                  ),
+                            ),
+                          ),
+                          const ImageGalleryScroller(
+                            imageUrls: ["", "asd", "", "", ""],
+                            delay: Duration(),
+                          ),
+                          const ImageGalleryScroller(
+                            imageUrls: ["", "asd", "", "", ""],
+                            delay: Duration(milliseconds: 2500),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          )
+        ],
       ),
     );
   }
