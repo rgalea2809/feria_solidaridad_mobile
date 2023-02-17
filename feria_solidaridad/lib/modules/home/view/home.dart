@@ -1,4 +1,5 @@
 import 'package:feria_solidaridad/constants/app_constants.dart';
+import 'package:feria_solidaridad/constants/assets_constants.dart';
 import 'package:feria_solidaridad/constants/debug_constants.dart';
 import 'package:feria_solidaridad/constants/theme_constants.dart';
 import 'package:feria_solidaridad/modules/home/model/social_link_data.dart';
@@ -15,15 +16,20 @@ class Home extends StatelessWidget {
       backgroundColor: kPrimaryColor,
       body: CustomScrollView(
         slivers: [
-          HomeAppBar(),
-          HomeWelcomeSection(),
-          HomeMediaSection(),
+          const HomeAppBar(),
+          const HomeWelcomeSection(),
+          const HomeMediaSection(),
           HomeFooter(
             socialLinks: [
               SocialLinkData(
-                url: "facebook.com/ucaserviciosocial",
-                icon: Icon(Icons.facebook),
+                url: kFacebookPageUrl,
+                icon: const Icon(Icons.facebook),
                 displayName: "Facebook/UcaServicioSocial",
+              ),
+              SocialLinkData(
+                url: kContactEmail,
+                icon: const Icon(Icons.email),
+                displayName: "css@uca.edu.sv",
               ),
             ],
           ),
@@ -54,7 +60,7 @@ class HomeAppBar extends StatelessWidget {
               ),
         ),
         background: Image.asset(
-          "assets/images/home_hero.png",
+          kHomeHeroPath,
           fit: BoxFit.cover,
         ),
       ),
@@ -74,7 +80,7 @@ class HomeWelcomeSection extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "XXI Feria de la Solidaridad",
+              "$kFairEditionNumber Feria de la Solidaridad",
               style: Theme.of(context).textTheme.overline?.copyWith(
                     color: Colors.white,
                   ),
@@ -121,7 +127,11 @@ class HomeWelcomeSection extends StatelessWidget {
                             ),
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Image.asset("assets/logo/logo-1.png"),
+                              child: Center(
+                                  child: Image.asset(
+                                kLogoPath,
+                                fit: BoxFit.fill,
+                              )),
                             ),
                           ),
                         ),
