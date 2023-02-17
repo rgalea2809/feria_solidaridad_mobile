@@ -334,19 +334,25 @@ class HomeFooter extends StatelessWidget {
                   ),
                   ...socialLinks.map<Widget>(
                     (e) {
-                      return Row(
-                        children: [
-                          e.icon,
-                          const SizedBox(
-                            width: 4.0,
-                          ),
-                          Text(
-                            e.displayName ?? e.url,
-                            style: Theme.of(context).textTheme.button?.copyWith(
-                                color: Colors.white,
-                                decoration: TextDecoration.underline),
-                          ),
-                        ],
+                      return GestureDetector(
+                        onTap: () {},
+                        child: Row(
+                          children: [
+                            e.icon,
+                            const SizedBox(
+                              width: 4.0,
+                            ),
+                            Text(
+                              e.displayName ?? e.url,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .button
+                                  ?.copyWith(
+                                      color: Colors.white,
+                                      decoration: TextDecoration.underline),
+                            ),
+                          ],
+                        ),
                       );
                     },
                   ).toList(),
