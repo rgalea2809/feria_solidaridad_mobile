@@ -1,5 +1,5 @@
 import 'package:feria_solidaridad/constants/theme_constants.dart';
-import 'package:feria_solidaridad/modules/home/view/home.dart';
+import 'package:feria_solidaridad/modules/app_coordinator/view/app_coordinator.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,12 +12,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         textTheme: kAppTextTheme,
       ),
-      home: const Home(),
+      home: const AppCoordinator(),
     );
   }
 }
