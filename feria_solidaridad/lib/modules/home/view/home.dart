@@ -35,6 +35,25 @@ class Home extends StatelessWidget {
           ),
         ],
       ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              decoration: const BoxDecoration(
+                color: kPrimaryColor,
+              ),
+              child: Text(
+                'Bienvenido',
+                style: Theme.of(context)
+                    .textTheme
+                    .headline6
+                    ?.copyWith(color: Colors.white),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -50,7 +69,12 @@ class HomeAppBar extends StatelessWidget {
       pinned: true,
       floating: true,
       expandedHeight: 160.0,
-      leading: IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
+      leading: IconButton(
+        onPressed: () {
+          Scaffold.of(context).openDrawer();
+        },
+        icon: const Icon(Icons.menu),
+      ),
       flexibleSpace: FlexibleSpaceBar(
         centerTitle: true,
         title: Text(
