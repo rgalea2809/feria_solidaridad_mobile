@@ -1,6 +1,5 @@
+import 'package:feria_solidaridad/constants/theme_constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class InstitutionsTab extends StatelessWidget {
   const InstitutionsTab({super.key});
@@ -10,8 +9,16 @@ class InstitutionsTab extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Instituciones"),
+        backgroundColor: kPrimaryColor,
       ),
-      body: ,
+      body: ListView.builder(
+        itemBuilder: (context, index) {
+          return Card(
+            child: Text("Card $index"),
+          );
+        },
+        itemCount: 10,
+      ),
     );
   }
 }
