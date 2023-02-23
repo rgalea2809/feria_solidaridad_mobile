@@ -19,7 +19,7 @@ class InstitutionsTab extends StatelessWidget {
           title: const Text("Instituciones"),
           backgroundColor: kPrimaryColor,
         ),
-        body: InstitutionsList(),
+        body: const InstitutionsList(),
       ),
     );
   }
