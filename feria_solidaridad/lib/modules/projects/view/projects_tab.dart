@@ -1,36 +1,36 @@
 import 'package:feria_solidaridad/constants/assets_constants.dart';
 import 'package:feria_solidaridad/constants/theme_constants.dart';
-import 'package:feria_solidaridad/modules/institutions/viewmodel/institutions_provider.dart';
-import 'package:feria_solidaridad/modules/institutions/viewmodel/services/institutions_service.dart';
+import 'package:feria_solidaridad/modules/projects/viewmodel/projects_provider.dart';
+import 'package:feria_solidaridad/modules/projects/viewmodel/services/projects_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class InstitutionsTab extends StatelessWidget {
-  const InstitutionsTab({super.key});
+class ProjectsTab extends StatelessWidget {
+  const ProjectsTab({super.key});
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) =>
-          InstitutionsProvider(institutionsService: InstitutionsServiceMock())
-            ..fetchInstitutions(),
+          ProjectsProvider(projectsService: ProjectsServiceMock())
+            ..fetchProjects(),
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Instituciones"),
+          title: const Text("Proyectos"),
           backgroundColor: kPrimaryColor,
         ),
-        body: const InstitutionsList(),
+        body: const ProjectsList(),
       ),
     );
   }
 }
 
-class InstitutionsList extends StatelessWidget {
-  const InstitutionsList({super.key});
+class ProjectsList extends StatelessWidget {
+  const ProjectsList({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<InstitutionsProvider>(
+    return Consumer<ProjectsProvider>(
       builder: (context, state, _) {
         return Column(
           children: [
@@ -40,55 +40,69 @@ class InstitutionsList extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Card(
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
+                    child: SizedBox(
+                      height: 300,
+                      child: Card(
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            Row(
-                              children: [
-                                Flexible(
-                                  flex: 1,
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(300.0),
-                                    child:
-                                        Image.asset(kDefaultPlaceholderImage),
-                                  ),
-                                ),
-                                Flexible(
-                                  flex: 2,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      state.currentInstitutions[index].name,
-                                      style:
-                                          Theme.of(context).textTheme.headline6,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 16.0,
-                            ),
-                            Text(state.currentInstitutions[index].description),
-                            const SizedBox(
-                              height: 16.0,
-                            ),
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: ElevatedButton(
-                                onPressed: () {},
-                                child: const Text("Ver más"),
+                            Flexible(
+                              flex: 1,
+                              child: Image.asset(
+                                kDefaultPlaceholderImage,
+                                fit: BoxFit.cover,
                               ),
-                            )
+                            ),
+                            Flexible(
+                              flex: 2,
+                              child: Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: [
+                                    Align(
+                                      alignment: Alignment.centerRight,
+                                      child: Text(
+                                        state.currentProjects[index].name,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline6,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      height: 16.0,
+                                    ),
+                                    Text(
+                                      "Modalidad: ${state.currentProjects[index].modality}",
+                                    ),
+                                    const SizedBox(
+                                      height: 8.0,
+                                    ),
+                                    Text(
+                                      "Horas requeridas: ${state.currentProjects[index].hours}",
+                                    ),
+                                    const SizedBox(
+                                      height: 16.0,
+                                    ),
+                                    Align(
+                                      alignment: Alignment.centerRight,
+                                      child: ElevatedButton(
+                                        onPressed: () {},
+                                        child: const Text("Ver más"),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                       ),
                     ),
                   );
                 },
-                itemCount: state.currentInstitutions.length,
+                itemCount: state.currentProjects.length,
               ),
             ),
           ],
@@ -183,8 +197,8 @@ class InstitutionsList extends StatelessWidget {
         IconButton(
           onPressed: currentPage > 1
               ? () {
-                  Provider.of<InstitutionsProvider>(context, listen: false)
-                      .changeInstitutionsPage(currentPage - 1);
+                  Provider.of<ProjectsProvider>(context, listen: false)
+                      .changeProjectsPage(currentPage - 1);
                 }
               : null,
           icon: const Icon(Icons.chevron_left),
@@ -195,8 +209,8 @@ class InstitutionsList extends StatelessWidget {
         IconButton(
           onPressed: currentPage < numberOfPages
               ? () {
-                  Provider.of<InstitutionsProvider>(context, listen: false)
-                      .changeInstitutionsPage(currentPage + 1);
+                  Provider.of<ProjectsProvider>(context, listen: false)
+                      .changeProjectsPage(currentPage + 1);
                 }
               : null,
           icon: const Icon(Icons.chevron_right),
