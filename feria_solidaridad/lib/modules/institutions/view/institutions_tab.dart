@@ -1,5 +1,4 @@
 import 'package:feria_solidaridad/constants/assets_constants.dart';
-import 'package:feria_solidaridad/constants/debug_constants.dart';
 import 'package:feria_solidaridad/constants/theme_constants.dart';
 import 'package:feria_solidaridad/modules/institutions/viewmodel/institutions_provider.dart';
 import 'package:feria_solidaridad/modules/institutions/viewmodel/services/institutions_service.dart';
