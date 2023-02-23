@@ -20,6 +20,7 @@ class InstitutionsServiceMock implements InstitutionsServiceType {
       );
     }
 
-    return InstitutionsResponse(retrievedInstitutions: [], numberOfPages: 10);
+    return InstitutionsResponse(
+        retrievedInstitutions: institutions, numberOfPages: 10);
   }
 }

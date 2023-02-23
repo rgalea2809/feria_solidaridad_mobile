@@ -10,7 +10,7 @@ class InstitutionsProvider extends ChangeNotifier {
   // Parameters
   List<Institution> currentInstitutions = [];
   bool isFetchingData = false;
-  int currentPage = 0;
+  int currentPage = 1;
   int numberOfPages = 0;
 
   InstitutionsProvider({required this.institutionsService});
@@ -37,5 +37,6 @@ class InstitutionsProvider extends ChangeNotifier {
 
   void setLoadingState(bool loadingState) {
     isFetchingData = loadingState;
+    notifyListeners();
   }
 }
