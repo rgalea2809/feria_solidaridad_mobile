@@ -32,11 +32,13 @@ class _ImageGalleryScrollerState extends State<ImageGalleryScroller> {
           _currentPage = 0;
         }
 
-        _pageController.animateToPage(
-          _currentPage,
-          duration: const Duration(milliseconds: 2900),
-          curve: Curves.easeInOut,
-        );
+        if (mounted) {
+          _pageController.animateToPage(
+            _currentPage,
+            duration: const Duration(milliseconds: 2900),
+            curve: Curves.easeInOut,
+          );
+        }
       });
     });
   }
