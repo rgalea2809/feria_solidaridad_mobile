@@ -16,6 +16,13 @@ class InstitutionsServiceMock implements InstitutionsServiceType {
         Institution(
           name: "Institucion #$i| Pg.$page",
           description: kLoremParagraph,
+          images: [],
+          aboutUs: kLoremParagraph,
+          objective: "Objetivo placeholder",
+          mission: kLoremParagraph,
+          vision: kLoremParagraph,
+          projects: [],
+          contacts: [],
         ),
       );
     }
