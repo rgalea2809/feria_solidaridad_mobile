@@ -1,5 +1,8 @@
 import 'package:feria_solidaridad/constants/assets_constants.dart';
 import 'package:feria_solidaridad/constants/theme_constants.dart';
+import 'package:feria_solidaridad/modules/app_coordinator/viewmodel/app_coordinator_provider.dart';
+import 'package:feria_solidaridad/modules/institution_detail/view/institution_detail_page.dart';
+import 'package:feria_solidaridad/modules/institutions/model/institution.dart';
 import 'package:feria_solidaridad/modules/institutions/viewmodel/institutions_provider.dart';
 import 'package:feria_solidaridad/modules/institutions/viewmodel/services/institutions_service.dart';
 import 'package:flutter/material.dart';
@@ -38,54 +41,8 @@ class InstitutionsList extends StatelessWidget {
             Expanded(
               child: ListView.builder(
                 itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Card(
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                          children: [
-                            Row(
-                              children: [
-                                Flexible(
-                                  flex: 1,
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(300.0),
-                                    child:
-                                        Image.asset(kDefaultPlaceholderImage),
-                                  ),
-                                ),
-                                Flexible(
-                                  flex: 2,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      state.currentInstitutions[index].name,
-                                      style:
-                                          Theme.of(context).textTheme.headline6,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 16.0,
-                            ),
-                            Text(state.currentInstitutions[index].description),
-                            const SizedBox(
-                              height: 16.0,
-                            ),
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: ElevatedButton(
-                                onPressed: () {},
-                                child: const Text("Ver más"),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
+                  return InstitutionCard(
+                    institution: state.currentInstitutions[index],
                   );
                 },
                 itemCount: state.currentInstitutions.length,
@@ -202,6 +159,74 @@ class InstitutionsList extends StatelessWidget {
           icon: const Icon(Icons.chevron_right),
         ),
       ],
+    );
+  }
+}
+
+class InstitutionCard extends StatelessWidget {
+  const InstitutionCard({
+    Key? key,
+    required this.institution,
+  }) : super(key: key);
+
+  final Institution institution;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Flexible(
+                    flex: 1,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(300.0),
+                      child: Image.asset(kDefaultPlaceholderImage),
+                    ),
+                  ),
+                  Flexible(
+                    flex: 2,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        institution.name,
+                        style: Theme.of(context).textTheme.headline6,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 16.0,
+              ),
+              Text(institution.description),
+              const SizedBox(
+                height: 16.0,
+              ),
+              Align(
+                alignment: Alignment.centerRight,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => InstitutionDetailPage(
+                            currentInstitution: institution),
+                      ),
+                    );
+                  },
+                  child: const Text("Ver más"),
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
