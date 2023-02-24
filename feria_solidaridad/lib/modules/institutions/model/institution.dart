@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:feria_solidaridad/modules/projects/model/project.dart';
 
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 class Institution {
   String name;
   String? imageUrl;
