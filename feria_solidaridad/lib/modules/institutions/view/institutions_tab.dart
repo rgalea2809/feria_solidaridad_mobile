@@ -1,6 +1,5 @@
 import 'package:feria_solidaridad/constants/assets_constants.dart';
 import 'package:feria_solidaridad/constants/theme_constants.dart';
-import 'package:feria_solidaridad/modules/app_coordinator/viewmodel/app_coordinator_provider.dart';
 import 'package:feria_solidaridad/modules/institution_detail/view/institution_detail_page.dart';
 import 'package:feria_solidaridad/modules/institutions/model/institution.dart';
 import 'package:feria_solidaridad/modules/institutions/viewmodel/institutions_provider.dart';
