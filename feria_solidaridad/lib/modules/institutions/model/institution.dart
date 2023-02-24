@@ -12,6 +12,11 @@ class Institution {
     required this.description,
   });
 
+  // Placeholder constructor
+  Institution.placeholder()
+      : name = "",
+        description = "";
+
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'name': name,

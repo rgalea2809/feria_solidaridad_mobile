@@ -10,6 +10,7 @@ enum AppCoordinatorTab {
 class AppCoordinatorProvider extends ChangeNotifier {
   var currentTab = AppCoordinatorTab.home;
 
+  // Navigation
   void changeTab(AppCoordinatorTab newTab) {
     currentTab = newTab;
 
