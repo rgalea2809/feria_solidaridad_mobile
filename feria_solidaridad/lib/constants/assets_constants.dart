@@ -6,4 +6,4 @@ const String kHomeHeroPath = "assets/images/home_hero.png";
 
 // Network assets
 const String kNetworkPlaceholderImage150 = "https://via.placeholder.com/150";
-const String kNetworkPlaceholderImage200 = "https://via.placeholder.com/150";
+const String kNetworkPlaceholderImage200 = "https://via.placeholder.com/200";
