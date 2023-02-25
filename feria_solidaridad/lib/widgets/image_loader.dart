@@ -11,9 +11,10 @@ class ImageLoader extends StatelessWidget {
     return Builder(builder: (context) {
       if (imageUrl != null) {
         return CachedNetworkImage(
+          fit: BoxFit.cover,
           imageUrl: imageUrl!,
           placeholder: (context, url) {
-            return const CircularProgressIndicator();
+            return const Center(child: CircularProgressIndicator());
           },
           errorWidget: (context, url, error) {
             return Text("Image $url not found! ($error)");
