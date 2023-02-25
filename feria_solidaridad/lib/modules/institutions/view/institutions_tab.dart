@@ -1,9 +1,9 @@
-import 'package:feria_solidaridad/constants/assets_constants.dart';
 import 'package:feria_solidaridad/constants/theme_constants.dart';
 import 'package:feria_solidaridad/modules/institution_detail/view/institution_detail_page.dart';
 import 'package:feria_solidaridad/modules/institutions/model/institution.dart';
 import 'package:feria_solidaridad/modules/institutions/viewmodel/institutions_provider.dart';
 import 'package:feria_solidaridad/modules/institutions/viewmodel/services/institutions_service.dart';
+import 'package:feria_solidaridad/widgets/image_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -185,7 +185,7 @@ class InstitutionCard extends StatelessWidget {
                     flex: 1,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(300.0),
-                      child: Image.asset(kDefaultPlaceholderImage),
+                      child: ImageLoader(imageUrl: institution.imageUrl),
                     ),
                   ),
                   Flexible(
