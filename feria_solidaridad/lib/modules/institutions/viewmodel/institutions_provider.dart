@@ -10,8 +10,6 @@ class InstitutionsProvider extends ChangeNotifier {
   // Parameters
   List<Institution> currentInstitutions = [];
   bool isFetchingData = false;
-  int currentPage = 1;
-  int numberOfPages = 0;
 
   InstitutionsProvider({required this.institutionsService});
 
@@ -19,20 +17,12 @@ class InstitutionsProvider extends ChangeNotifier {
     setLoadingState(true);
 
     InstitutionsResponse institutionsData =
-        await institutionsService.fetchInstitutionsData(currentPage);
+        await institutionsService.fetchInstitutionsData();
 
     currentInstitutions.clear();
     currentInstitutions = institutionsData.retrievedInstitutions;
-    numberOfPages = institutionsData.numberOfPages;
 
     setLoadingState(false);
-  }
-
-  Future<void> changeInstitutionsPage(int newPage) async {
-    currentPage = newPage;
-    notifyListeners();
-
-    await fetchInstitutions();
   }
 
   void setLoadingState(bool loadingState) {

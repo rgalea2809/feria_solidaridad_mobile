@@ -5,34 +5,27 @@ import 'package:feria_solidaridad/modules/institutions/model/institution.dart';
 
 class InstitutionsResponse {
   List<Institution> retrievedInstitutions;
-  int numberOfPages;
 
   InstitutionsResponse({
     required this.retrievedInstitutions,
-    required this.numberOfPages,
   });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'retrievedInstitutions':
           retrievedInstitutions.map((x) => x.toMap()).toList(),
-      'numberOfPages': numberOfPages,
     };
   }
 
-  factory InstitutionsResponse.fromMap(Map<String, dynamic> map) {
-    return InstitutionsResponse(
-      retrievedInstitutions: List<Institution>.from(
-        (map['retrievedInstitutions'] as List<int>).map<Institution>(
-          (x) => Institution.fromMap(x as Map<String, dynamic>),
-        ),
-      ),
-      numberOfPages: map['numberOfPages'] as int,
-    );
+  factory InstitutionsResponse.fromMapList(List<dynamic> institutionsList) {
+    List<Institution> institutions = [];
+
+    for (var institutionMap in institutionsList) {
+      institutions.add(Institution.fromMap(institutionMap));
+    }
+
+    return InstitutionsResponse(retrievedInstitutions: institutions);
   }
 
   String toJson() => json.encode(toMap());
-
-  factory InstitutionsResponse.fromJson(String source) =>
-      InstitutionsResponse.fromMap(json.decode(source) as Map<String, dynamic>);
 }
