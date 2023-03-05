@@ -1,5 +1,4 @@
 import 'package:feria_solidaridad/constants/app_constants.dart';
-import 'package:feria_solidaridad/constants/assets_constants.dart';
 import 'package:feria_solidaridad/constants/debug_constants.dart';
 import 'package:feria_solidaridad/modules/institutions/model/institution.dart';
 import 'package:feria_solidaridad/modules/institutions/model/institutions_response.dart';
@@ -10,7 +9,7 @@ import 'package:feria_solidaridad/networking/network_response.dart';
 import 'package:feria_solidaridad/networking/network_service.dart';
 
 abstract class InstitutionsServiceType {
-  Future<InstitutionsResponse> fetchInstitutionsData();
+  Future<InstitutionsResponse> fetchInstitutionsData(int page);
 }
 
 class InstitutionsService implements InstitutionsServiceType {
@@ -19,32 +18,27 @@ class InstitutionsService implements InstitutionsServiceType {
   InstitutionsService({required this.networkService});
 
   @override
-  Future<InstitutionsResponse> fetchInstitutionsData() async {
+  Future<InstitutionsResponse> fetchInstitutionsData(int page) async {
     final request = NetworkRequest(
       type: NetworkRequestType.GET,
       path: kApiPaths[ApiPath.getAllInstitutions] ?? "",
       data: NetworkRequestBody.empty(),
+      queryParams: {'page': page},
     );
 
     NetworkResponse response = await networkService.execute(request);
 
-    print("\n\n");
-    print(response.data?["data"]);
-    print("\n\n");
-
     if (response.data == null) {
-      return InstitutionsResponse(
-        retrievedInstitutions: [],
-      );
+      return InstitutionsResponse.empty();
     }
 
-    return InstitutionsResponse.fromMapList(response.data!["data"]);
+    return InstitutionsResponse.fromMap(response.data!);
   }
 }
 
 class InstitutionsServiceMock implements InstitutionsServiceType {
   @override
-  Future<InstitutionsResponse> fetchInstitutionsData() async {
+  Future<InstitutionsResponse> fetchInstitutionsData(int page) async {
     List<Institution> institutions = [];
 
     for (int i = 0; i < 10; i++) {
@@ -74,6 +68,18 @@ class InstitutionsServiceMock implements InstitutionsServiceType {
       );
     }
 
-    return InstitutionsResponse(retrievedInstitutions: institutions);
+    return InstitutionsResponse(
+      data: InstitutionsResponseData(
+        meta: InstitutionsResponseMetaData(
+          totalItems: 2,
+          itemCount: 10,
+          itemsPerPage: 10,
+          totalPages: 3,
+          currentPage: page,
+        ),
+        items: institutions,
+      ),
+      statusCode: 200,
+    );
   }
 }

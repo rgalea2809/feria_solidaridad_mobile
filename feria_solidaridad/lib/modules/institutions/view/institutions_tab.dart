@@ -40,15 +40,130 @@ class InstitutionsList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<InstitutionsProvider>(
       builder: (context, state, _) {
-        return ListView.builder(
-          itemBuilder: (context, index) {
-            return InstitutionCard(
-              institution: state.currentInstitutions[index],
-            );
-          },
-          itemCount: state.currentInstitutions.length,
+        return Column(
+          children: [
+            getPageIndicator(state.numberOfPages, state.currentPage, context),
+            Expanded(
+              child: ListView.builder(
+                itemBuilder: (context, index) {
+                  return InstitutionCard(
+                    institution: state.currentInstitutions[index],
+                  );
+                },
+                itemCount: state.currentInstitutions.length,
+              ),
+            ),
+          ],
         );
       },
+    );
+  }
+
+  Widget getPageIndicator(
+    int numberOfPages,
+    int currentPage,
+    BuildContext context,
+  ) {
+    Widget numbersSection = Container();
+
+    if (numberOfPages <= 5) {
+      numbersSection = Expanded(
+        child: Row(
+          children: List.generate(
+            numberOfPages,
+            (page) {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "${page + 1}",
+                  style: Theme.of(context).textTheme.button?.copyWith(
+                      fontWeight: currentPage == page + 1
+                          ? FontWeight.bold
+                          : FontWeight.normal),
+                ),
+              );
+            },
+          ),
+        ),
+      );
+    } else {
+      if (currentPage == 1 || currentPage == numberOfPages) {
+        numbersSection = Expanded(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "1",
+                style: Theme.of(context).textTheme.button?.copyWith(
+                    fontWeight:
+                        currentPage == 1 ? FontWeight.bold : FontWeight.normal),
+              ),
+              const Text("..."),
+              Text(
+                "$numberOfPages",
+                style: Theme.of(context).textTheme.button?.copyWith(
+                    fontWeight: currentPage == numberOfPages
+                        ? FontWeight.bold
+                        : FontWeight.normal),
+              ),
+            ],
+          ),
+        );
+      } else {
+        numbersSection = Expanded(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "1",
+                style: Theme.of(context).textTheme.button?.copyWith(
+                      fontWeight: currentPage == 1
+                          ? FontWeight.bold
+                          : FontWeight.normal,
+                    ),
+              ),
+              const Text("..."),
+              Text(
+                "$currentPage",
+                style: Theme.of(context).textTheme.button?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+              ),
+              const Text("..."),
+              Text(
+                "$numberOfPages",
+                style: Theme.of(context).textTheme.button,
+              ),
+            ],
+          ),
+        );
+      }
+    }
+
+    return Row(
+      children: [
+        IconButton(
+          onPressed: currentPage > 1
+              ? () {
+                  Provider.of<InstitutionsProvider>(context, listen: false)
+                      .changeInstitutionsPage(currentPage - 1);
+                }
+              : null,
+          icon: const Icon(Icons.chevron_left),
+        ),
+        const SizedBox(width: 16),
+        numbersSection,
+        const SizedBox(width: 16),
+        IconButton(
+          onPressed: currentPage < numberOfPages
+              ? () {
+                  Provider.of<InstitutionsProvider>(context, listen: false)
+                      .changeInstitutionsPage(currentPage + 1);
+                }
+              : null,
+          icon: const Icon(Icons.chevron_right),
+        ),
+      ],
     );
   }
 }
