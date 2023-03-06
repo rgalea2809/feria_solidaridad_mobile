@@ -43,16 +43,18 @@ class InstitutionsList extends StatelessWidget {
         return Column(
           children: [
             getPageIndicator(state.numberOfPages, state.currentPage, context),
-            Expanded(
-              child: ListView.builder(
-                itemBuilder: (context, index) {
-                  return InstitutionCard(
-                    institution: state.currentInstitutions[index],
-                  );
-                },
-                itemCount: state.currentInstitutions.length,
-              ),
-            ),
+            state.isFetchingData
+                ? const Center(child: CircularProgressIndicator())
+                : Expanded(
+                    child: ListView.builder(
+                      itemBuilder: (context, index) {
+                        return InstitutionCard(
+                          institution: state.currentInstitutions[index],
+                        );
+                      },
+                      itemCount: state.currentInstitutions.length,
+                    ),
+                  ),
           ],
         );
       },
@@ -188,6 +190,7 @@ class InstitutionCard extends StatelessWidget {
               Row(
                 children: [
                   Flexible(
+                    fit: FlexFit.tight,
                     flex: 1,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(300.0),
