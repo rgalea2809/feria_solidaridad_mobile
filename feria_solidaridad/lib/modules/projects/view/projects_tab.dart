@@ -1,8 +1,10 @@
+import 'package:feria_solidaridad/constants/app_constants.dart';
 import 'package:feria_solidaridad/constants/assets_constants.dart';
 import 'package:feria_solidaridad/constants/theme_constants.dart';
 import 'package:feria_solidaridad/modules/projects/model/project.dart';
 import 'package:feria_solidaridad/modules/projects/viewmodel/projects_provider.dart';
 import 'package:feria_solidaridad/modules/projects/viewmodel/services/projects_service.dart';
+import 'package:feria_solidaridad/networking/network_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -12,9 +14,13 @@ class ProjectsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) =>
-          ProjectsProvider(projectsService: ProjectsServiceMock())
-            ..fetchProjects(),
+      create: (context) => ProjectsProvider(
+        projectsService: ProjectsService(
+          networkService: NetworkService(
+            baseUrl: kApiBaseUrl,
+          ),
+        ),
+      )..fetchProjects(),
       child: Scaffold(
         appBar: AppBar(
           title: const Text("Proyectos"),
@@ -193,7 +199,7 @@ class ProjectListCard extends StatelessWidget {
                       Align(
                         alignment: Alignment.centerRight,
                         child: Text(
-                          project.name,
+                          project.title,
                           style: Theme.of(context).textTheme.headline6,
                         ),
                       ),

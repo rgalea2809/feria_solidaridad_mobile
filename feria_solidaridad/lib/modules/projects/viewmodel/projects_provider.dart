@@ -22,8 +22,8 @@ class ProjectsProvider extends ChangeNotifier {
         await projectsService.fetchProjectsData(currentPage);
 
     currentProjects.clear();
-    currentProjects = projectsData.projects;
-    numberOfPages = projectsData.numberOfPages;
+    currentProjects = projectsData.data.items;
+    numberOfPages = projectsData.data.meta.totalPages;
 
     setLoadingState(false);
   }

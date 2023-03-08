@@ -11,8 +11,9 @@ const String kContactEmail = "instagram.com/serviciosocialuca";
 const String kApiBaseUrl = "feria-solidaridad-server.vercel.app";
 
 // API - Institutions
-enum ApiPath { getAllInstitutions }
+enum ApiPath { getAllInstitutions, getAllProjects }
 
 const Map<ApiPath, String> kApiPaths = {
-  ApiPath.getAllInstitutions: "/institution"
+  ApiPath.getAllInstitutions: "/institution",
+  ApiPath.getAllProjects: "/project"
 };
