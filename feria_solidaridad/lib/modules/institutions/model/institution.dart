@@ -1,85 +1,83 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 import 'package:feria_solidaridad/modules/projects/model/project.dart';
 
 class Institution {
+  int id;
   String name;
-  String? imageUrl;
-  String description;
-  List<String> images;
+  String? logoUrl;
   String? location;
-  String aboutUs;
-  String objective;
-  String mission;
-  String vision;
-  String? videoId;
-  List<Project> projects;
-  List<String> contacts;
+  String? aboutUs;
+  String? objective;
+  String? mission;
+  String? vision;
+  String? videoUrl;
+  List<Project>? projects;
+  List<String>? contacts;
 
   Institution({
+    required this.id,
     required this.name,
-    this.imageUrl,
-    required this.description,
-    required this.images,
+    this.logoUrl,
     this.location,
     required this.aboutUs,
     required this.objective,
     required this.mission,
     required this.vision,
-    this.videoId,
-    required this.projects,
-    required this.contacts,
+    this.videoUrl,
+    this.projects,
+    this.contacts,
   });
 
   // Placeholder constructor
   Institution.placeholder()
-      : name = "",
-        description = "",
-        images = [],
+      : id = 0,
+        name = "text",
+        logoUrl = null,
         aboutUs = "",
         objective = "",
         mission = "",
-        vision = "",
-        projects = [],
-        contacts = [];
+        vision = "";
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
+      'id': id,
       'name': name,
-      'imageUrl': imageUrl,
-      'description': description,
-      'images': images,
+      'logoUrl': logoUrl,
       'location': location,
       'aboutUs': aboutUs,
       'objective': objective,
       'mission': mission,
       'vision': vision,
-      'videoId': videoId,
-      'projects': projects.map((x) => x.toMap()).toList(),
+      'videoUrl': videoUrl,
+      'projects': projects?.map((x) => x.toMap()).toList(),
       'contacts': contacts,
     };
   }
 
   factory Institution.fromMap(Map<String, dynamic> map) {
     return Institution(
-        name: map['name'] as String,
-        imageUrl: map['imageUrl'] != null ? map['imageUrl'] as String : null,
-        description: map['description'] as String,
-        images: List<String>.from(map['images'] as List<String>),
-        location: map['location'] != null ? map['location'] as String : null,
-        aboutUs: map['aboutUs'] as String,
-        objective: map['objective'] as String,
-        mission: map['mission'] as String,
-        vision: map['vision'] as String,
-        videoId: map['videoId'] != null ? map['videoId'] as String : null,
-        projects: List<Project>.from(
-          (map['projects'] as List<int>).map<Project>(
-            (x) => Project.fromMap(x as Map<String, dynamic>),
-          ),
-        ),
-        contacts: List<String>.from(
-          (map['contacts'] as List<String>),
-        ));
+      id: map['id'] as int,
+      name: map['name'] as String,
+      logoUrl: map['logoUrl'] != null ? map['logoUrl'] as String : null,
+      location: map['location'] != null ? map['location'] as String : null,
+      aboutUs: map['aboutUs'] != null ? map['aboutUs'] as String : null,
+      objective: map['objective'] != null ? map['objective'] as String : null,
+      mission: map['mission'] != null ? map['mission'] as String : null,
+      vision: map['vision'] != null ? map['vision'] as String : null,
+      videoUrl: map['videoUrl'] != null ? map['videoUrl'] as String : null,
+      projects: map['projects'] != null
+          ? List<Project>.from(
+              (map['projects'] as List<int>).map<Project?>(
+                (x) => Project.fromMap(x as Map<String, dynamic>),
+              ),
+            )
+          : null,
+      contacts: map['contacts'] != null
+          ? List<String>.from((map['contacts'] as List<String>))
+          : null,
+    );
   }
 
   String toJson() => json.encode(toMap());

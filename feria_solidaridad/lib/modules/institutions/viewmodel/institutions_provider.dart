@@ -22,8 +22,8 @@ class InstitutionsProvider extends ChangeNotifier {
         await institutionsService.fetchInstitutionsData(currentPage);
 
     currentInstitutions.clear();
-    currentInstitutions = institutionsData.retrievedInstitutions;
-    numberOfPages = institutionsData.numberOfPages;
+    currentInstitutions = institutionsData.data.items;
+    numberOfPages = institutionsData.data.meta.totalPages;
 
     setLoadingState(false);
   }

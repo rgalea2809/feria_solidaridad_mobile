@@ -22,11 +22,13 @@ class InstitutionDetailPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            /* // TODO: Change this for images
             currentInstitution.images.isNotEmpty
                 ? ImagesHeader(
                     imagesUrls: currentInstitution.images,
                   )
                 : Container(),
+                */
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
@@ -40,48 +42,50 @@ class InstitutionDetailPage extends StatelessWidget {
                   ),
                   InformationBullet(
                     title: "¿Quienes somos?",
-                    body: currentInstitution.aboutUs,
+                    body: currentInstitution.aboutUs ?? "",
                   ),
                   const SizedBox(
                     height: 32.0,
                   ),
                   InformationBullet(
                     title: "Objetivo",
-                    body: currentInstitution.objective,
+                    body: currentInstitution.objective ?? "",
                   ),
                   const SizedBox(
                     height: 32.0,
                   ),
                   InformationBullet(
                     title: "Mision",
-                    body: currentInstitution.mission,
+                    body: currentInstitution.mission ?? "",
                   ),
                   const SizedBox(
                     height: 32.0,
                   ),
                   InformationBullet(
                     title: "Vision",
-                    body: currentInstitution.vision,
+                    body: currentInstitution.vision ?? "",
                   ),
                   const SizedBox(
                     height: 32.0,
                   ),
-                  currentInstitution.videoId != null
-                      ? VideoSection(videoId: currentInstitution.videoId!)
+                  currentInstitution.videoUrl != null
+                      ? VideoSection(videoId: currentInstitution.videoUrl!)
                       : Container(),
                   const SizedBox(
                     height: 32.0,
                   ),
-                  currentInstitution.projects.isNotEmpty
+                  currentInstitution.projects != null &&
+                          currentInstitution.projects!.isNotEmpty
                       ? ProjectsSection(
-                          projects: currentInstitution.projects,
+                          projects: currentInstitution.projects!,
                         )
                       : Container(),
                   const SizedBox(
                     height: 32.0,
                   ),
-                  currentInstitution.contacts.isNotEmpty
-                      ? ContactsSection(contacts: currentInstitution.contacts)
+                  currentInstitution.contacts != null &&
+                          currentInstitution.contacts!.isNotEmpty
+                      ? ContactsSection(contacts: currentInstitution.contacts!)
                       : Container(),
                 ],
               ),
