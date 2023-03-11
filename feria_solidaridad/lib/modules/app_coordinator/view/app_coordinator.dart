@@ -1,5 +1,6 @@
 import 'package:feria_solidaridad/constants/theme_constants.dart';
 import 'package:feria_solidaridad/modules/app_coordinator/viewmodel/app_coordinator_provider.dart';
+import 'package:feria_solidaridad/modules/events_tab/view/events_tab.dart';
 import 'package:feria_solidaridad/modules/home/view/home.dart';
 import 'package:feria_solidaridad/modules/institutions/view/institutions_tab.dart';
 import 'package:feria_solidaridad/modules/projects/view/projects_tab.dart';
@@ -77,6 +78,8 @@ class CurrentAppTab extends StatelessWidget {
         return const InstitutionsTab();
       case AppCoordinatorTab.projects:
         return const ProjectsTab();
+      case AppCoordinatorTab.events:
+        return const EventsTab();
       default:
         return const Text("Not implemented");
     }
