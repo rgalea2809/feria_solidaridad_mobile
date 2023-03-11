@@ -2,18 +2,22 @@ import 'dart:convert';
 
 import 'package:feria_solidaridad/modules/events_tab/model/event.dart';
 
-class EventResponse {
+class EventsResponse {
   List<Event> data;
   int statusCode;
   String? error;
   String? message;
 
-  EventResponse({
+  EventsResponse({
     required this.data,
     required this.statusCode,
     this.error,
     this.message,
   });
+
+  EventsResponse.empty()
+      : data = [],
+        statusCode = 200;
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
@@ -30,8 +34,8 @@ class EventResponse {
     return result;
   }
 
-  factory EventResponse.fromMap(Map<String, dynamic> map) {
-    return EventResponse(
+  factory EventsResponse.fromMap(Map<String, dynamic> map) {
+    return EventsResponse(
       data: List<Event>.from(map['data']?.map((x) => Event.fromMap(x))),
       statusCode: map['statusCode']?.toInt() ?? 0,
       error: map['error'],
@@ -41,6 +45,6 @@ class EventResponse {
 
   String toJson() => json.encode(toMap());
 
-  factory EventResponse.fromJson(String source) =>
-      EventResponse.fromMap(json.decode(source));
+  factory EventsResponse.fromJson(String source) =>
+      EventsResponse.fromMap(json.decode(source));
 }
