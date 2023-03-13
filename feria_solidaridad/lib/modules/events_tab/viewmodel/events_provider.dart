@@ -11,7 +11,7 @@ class EventsProvider extends ChangeNotifier {
   List<Event> events = [];
   bool isLoading = false;
 
-  Future<void> fetchEvents() async {
+  Future<void> loadEvents() async {
     setLoadingState(true);
 
     EventsResponse eventsResponse = await eventsService.fetchEvents();
