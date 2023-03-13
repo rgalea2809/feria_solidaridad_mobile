@@ -43,10 +43,10 @@ class InstitutionsList extends StatelessWidget {
         return Column(
           children: [
             getPageIndicator(state.numberOfPages, state.currentPage, context),
-            state.isFetchingData
-                ? const Center(child: CircularProgressIndicator())
-                : Expanded(
-                    child: ListView.builder(
+            Expanded(
+              child: state.isFetchingData
+                  ? const Center(child: CircularProgressIndicator())
+                  : ListView.builder(
                       itemBuilder: (context, index) {
                         return InstitutionCard(
                           institution: state.currentInstitutions[index],
@@ -54,7 +54,7 @@ class InstitutionsList extends StatelessWidget {
                       },
                       itemCount: state.currentInstitutions.length,
                     ),
-                  ),
+            ),
           ],
         );
       },

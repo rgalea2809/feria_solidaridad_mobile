@@ -43,14 +43,18 @@ class ProjectsList extends StatelessWidget {
           children: [
             getPageIndicator(state.numberOfPages, state.currentPage, context),
             Expanded(
-              child: ListView.builder(
-                itemBuilder: (context, index) {
-                  return ProjectListCard(
-                    project: state.currentProjects[index],
-                  );
-                },
-                itemCount: state.currentProjects.length,
-              ),
+              child: state.currentProjects.isEmpty
+                  ? const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : ListView.builder(
+                      itemBuilder: (context, index) {
+                        return ProjectListCard(
+                          project: state.currentProjects[index],
+                        );
+                      },
+                      itemCount: state.currentProjects.length,
+                    ),
             ),
           ],
         );
