@@ -22,12 +22,56 @@ class EventsTab extends StatelessWidget {
           title: const Text("Eventos"),
           backgroundColor: kPrimaryColor,
         ),
-        body: Consumer<EventsProvider>(
-          builder: (context, state, _) {
-            return Text("Events: ${state.events.length}");
-          },
-        ),
+        body: const EventsListSection(),
       ),
     );
+  }
+}
+
+class EventsListSection extends StatelessWidget {
+  const EventsListSection({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<EventsProvider>(builder: (context, state, _) {
+      if (state.events.isEmpty) {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      }
+
+      return Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Center(
+          child: ListView.builder(
+            itemBuilder: (context, index) {
+              return Container(
+                decoration: const BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(width: 1, color: kPrimaryColor),
+                  ),
+                ),
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(state.events[index].name),
+                    OutlinedButton(
+                      onPressed: () {},
+                      child: const Text(
+                        "Ver evento",
+                        style: TextStyle(color: kPrimaryColor),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+            shrinkWrap: true,
+            itemCount: state.events.length,
+          ),
+        ),
+      );
+    });
   }
 }
