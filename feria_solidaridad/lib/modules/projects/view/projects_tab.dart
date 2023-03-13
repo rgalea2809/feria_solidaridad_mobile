@@ -177,7 +177,7 @@ class ProjectListCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: SizedBox(
-        height: 300,
+        height: 350,
         child: Card(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -195,6 +195,7 @@ class ProjectListCard extends StatelessWidget {
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Align(
                         alignment: Alignment.centerRight,
@@ -219,7 +220,7 @@ class ProjectListCard extends StatelessWidget {
                         height: 16.0,
                       ),
                       Align(
-                        alignment: Alignment.centerRight,
+                        alignment: Alignment.bottomRight,
                         child: ElevatedButton(
                           onPressed: () {},
                           child: const Text("Ver más"),
