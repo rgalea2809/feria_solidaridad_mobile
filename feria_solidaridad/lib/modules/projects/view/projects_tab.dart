@@ -43,14 +43,18 @@ class ProjectsList extends StatelessWidget {
           children: [
             getPageIndicator(state.numberOfPages, state.currentPage, context),
             Expanded(
-              child: ListView.builder(
-                itemBuilder: (context, index) {
-                  return ProjectListCard(
-                    project: state.currentProjects[index],
-                  );
-                },
-                itemCount: state.currentProjects.length,
-              ),
+              child: state.currentProjects.isEmpty
+                  ? const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : ListView.builder(
+                      itemBuilder: (context, index) {
+                        return ProjectListCard(
+                          project: state.currentProjects[index],
+                        );
+                      },
+                      itemCount: state.currentProjects.length,
+                    ),
             ),
           ],
         );
@@ -177,7 +181,7 @@ class ProjectListCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: SizedBox(
-        height: 300,
+        height: 350,
         child: Card(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -195,12 +199,14 @@ class ProjectListCard extends StatelessWidget {
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Align(
                         alignment: Alignment.centerRight,
                         child: Text(
                           project.title,
                           style: Theme.of(context).textTheme.headline6,
+                          textAlign: TextAlign.end,
                         ),
                       ),
                       const SizedBox(
@@ -219,7 +225,7 @@ class ProjectListCard extends StatelessWidget {
                         height: 16.0,
                       ),
                       Align(
-                        alignment: Alignment.centerRight,
+                        alignment: Alignment.bottomRight,
                         child: ElevatedButton(
                           onPressed: () {},
                           child: const Text("Ver más"),
