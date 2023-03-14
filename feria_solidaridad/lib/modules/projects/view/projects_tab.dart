@@ -206,6 +206,7 @@ class ProjectListCard extends StatelessWidget {
                         child: Text(
                           project.title,
                           style: Theme.of(context).textTheme.headline6,
+                          textAlign: TextAlign.end,
                         ),
                       ),
                       const SizedBox(
