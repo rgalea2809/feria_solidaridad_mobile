@@ -1,5 +1,6 @@
 import 'package:feria_solidaridad/constants/app_constants.dart';
 import 'package:feria_solidaridad/constants/theme_constants.dart';
+import 'package:feria_solidaridad/modules/core/core_services/url_launcher_service.dart';
 import 'package:feria_solidaridad/modules/events_tab/viewmodel/events_provider.dart';
 import 'package:feria_solidaridad/modules/events_tab/viewmodel/services/events_service.dart';
 import 'package:feria_solidaridad/networking/network_service.dart';
@@ -16,6 +17,7 @@ class EventsTab extends StatelessWidget {
         eventsService: EventsService(
           networkService: NetworkService(baseUrl: kApiBaseUrl),
         ),
+        urlLauncherService: UrlLauncherService(),
       )..loadEvents(),
       child: Scaffold(
         appBar: AppBar(
@@ -57,7 +59,9 @@ class EventsListSection extends StatelessWidget {
                   children: [
                     Text(state.events[index].name),
                     OutlinedButton(
-                      onPressed: () {},
+                      onPressed: () async {
+                        await state.launchUrl(state.events[index].hyperlink);
+                      },
                       child: const Text(
                         "Ver evento",
                         style: TextStyle(color: kPrimaryColor),
