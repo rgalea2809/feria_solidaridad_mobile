@@ -1,10 +1,11 @@
 import 'package:feria_solidaridad/constants/app_constants.dart';
-import 'package:feria_solidaridad/constants/assets_constants.dart';
 import 'package:feria_solidaridad/constants/theme_constants.dart';
+import 'package:feria_solidaridad/modules/project_detail/view/project_detail_page.dart';
 import 'package:feria_solidaridad/modules/projects/model/project.dart';
 import 'package:feria_solidaridad/modules/projects/viewmodel/projects_provider.dart';
 import 'package:feria_solidaridad/modules/projects/viewmodel/services/projects_service.dart';
 import 'package:feria_solidaridad/networking/network_service.dart';
+import 'package:feria_solidaridad/widgets/image_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -188,9 +189,8 @@ class ProjectListCard extends StatelessWidget {
             children: [
               Flexible(
                 flex: 1,
-                child: Image.asset(
-                  kDefaultPlaceholderImage,
-                  fit: BoxFit.cover,
+                child: ImageLoader(
+                  imageUrl: project.imageUrl,
                 ),
               ),
               Flexible(
@@ -227,7 +227,15 @@ class ProjectListCard extends StatelessWidget {
                       Align(
                         alignment: Alignment.bottomRight,
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return ProjectDetailPage(project: project);
+                                },
+                              ),
+                            );
+                          },
                           child: const Text("Ver más"),
                         ),
                       )
