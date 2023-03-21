@@ -1,10 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
-
 import 'package:feria_solidaridad/modules/institutions/model/contact_data.dart';
 import 'package:feria_solidaridad/modules/institutions/model/image_data.dart';
 import 'package:feria_solidaridad/modules/institutions/model/project_preview.dart';
-import 'package:feria_solidaridad/modules/projects/model/project.dart';
 
 class Institution {
   int id;
@@ -12,7 +10,7 @@ class Institution {
   String aboutUs;
   String objective;
   String mission;
-  String vision;
+  String vission;
   String videoUrl;
   List<ProjectPreview> projects;
   List<ImageData> images;
@@ -24,7 +22,7 @@ class Institution {
     required this.aboutUs,
     required this.objective,
     required this.mission,
-    required this.vision,
+    required this.vission,
     required this.videoUrl,
     required this.projects,
     required this.images,
@@ -37,7 +35,7 @@ class Institution {
         aboutUs = "",
         objective = "",
         mission = "",
-        vision = "",
+        vission = "",
         videoUrl = "",
         projects = [],
         images = [],
@@ -51,7 +49,7 @@ class Institution {
     result.addAll({'aboutUs': aboutUs});
     result.addAll({'objective': objective});
     result.addAll({'mission': mission});
-    result.addAll({'vision': vision});
+    result.addAll({'vision': vission});
     result.addAll({'videoUrl': videoUrl});
     result.addAll({'projects': projects.map((x) => x.toMap()).toList()});
     result.addAll({'images': images.map((x) => x.toMap()).toList()});
@@ -67,7 +65,7 @@ class Institution {
       aboutUs: map['aboutUs'] ?? '',
       objective: map['objective'] ?? '',
       mission: map['mission'] ?? '',
-      vision: map['vision'] ?? '',
+      vission: map['vission'] ?? '',
       videoUrl: map['videoUrl'] ?? '',
       projects: List<ProjectPreview>.from(
           map['projects']?.map((x) => ProjectPreview.fromMap(x))),

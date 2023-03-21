@@ -7,7 +7,7 @@ import 'package:feria_solidaridad/networking/network_response.dart';
 import 'package:feria_solidaridad/networking/network_service.dart';
 
 abstract class ProjectsServiceType {
-  Future<ProjectsResponse> fetchProjectsData(int page);
+  Future<ProjectsResponse> fetchProjectData(int id);
 }
 
 class ProjectsService implements ProjectsServiceType {
@@ -16,12 +16,11 @@ class ProjectsService implements ProjectsServiceType {
   ProjectsService({required this.networkService});
 
   @override
-  Future<ProjectsResponse> fetchProjectsData(int page) async {
+  Future<ProjectsResponse> fetchProjectData(int id) async {
     final request = NetworkRequest(
       type: NetworkRequestType.GET,
-      path: kApiPaths[ApiPath.getAllProjects] ?? "",
+      path: "${kApiPaths[ApiPath.getAllProjects]}/$id",
       data: NetworkRequestBody.empty(),
-      queryParams: {'page': page},
     );
 
     NetworkResponse response = await networkService.execute(request);
@@ -31,26 +30,5 @@ class ProjectsService implements ProjectsServiceType {
     }
 
     return ProjectsResponse.fromMap(response.data!);
-  }
-}
-
-class ProjectsServiceMock implements ProjectsServiceType {
-  @override
-  Future<ProjectsResponse> fetchProjectsData(int page) async {
-    List<Project> projects = [];
-
-    for (int i = 0; i < 10; i++) {
-      projects.add(
-        Project(
-          id: i,
-          title: "Proyecto #$i| Pg.$page",
-          modality: i % 2 == 0 ? "Presencial" : "Virtual",
-          imageUrl: "",
-          hours: 10,
-        ),
-      );
-    }
-
-    return ProjectsResponse.empty();
   }
 }

@@ -13,6 +13,12 @@ class InstitutionPreview {
     required this.aboutUs,
   });
 
+  InstitutionPreview.empty()
+      : id = 0,
+        name = "",
+        logoUrl = "",
+        aboutUs = "";
+
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 

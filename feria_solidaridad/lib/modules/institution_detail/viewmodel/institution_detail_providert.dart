@@ -22,7 +22,7 @@ class InstitutionDetailProvider extends ChangeNotifier {
     InstitutionsResponse response =
         await institutionService.fetchInstitution(institutionPreview.id);
 
-    institution = response.data.item;
+    institution = response.data;
 
     setLoading(false);
   }

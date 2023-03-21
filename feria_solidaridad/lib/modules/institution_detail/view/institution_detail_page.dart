@@ -6,7 +6,6 @@ import 'package:feria_solidaridad/modules/institutions/model/institution.dart';
 import 'package:feria_solidaridad/modules/institutions/model/institution_preview.dart';
 import 'package:feria_solidaridad/modules/institutions/model/project_preview.dart';
 import 'package:feria_solidaridad/modules/institutions/viewmodel/services/institutions_service.dart';
-import 'package:feria_solidaridad/modules/projects/model/project.dart';
 import 'package:feria_solidaridad/modules/projects/view/projects_tab.dart';
 import 'package:feria_solidaridad/networking/network_service.dart';
 import 'package:feria_solidaridad/widgets/image_loader.dart';
@@ -24,9 +23,10 @@ class InstitutionDetailPage extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => InstitutionDetailProvider(
         institutionService: InstitutionsService(
-            networkService: NetworkService(baseUrl: kApiBaseUrl)),
+          networkService: NetworkService(baseUrl: kApiBaseUrl),
+        ),
         institutionPreview: currentInstitution,
-      ),
+      )..fetchInstitution(),
       child: Scaffold(
         appBar: AppBar(
           title: Text(currentInstitution.name),
@@ -79,7 +79,7 @@ class InstitutionDetailPage extends StatelessWidget {
                         ),
                         InformationBullet(
                           title: "Vision",
-                          body: institution.vision,
+                          body: institution.vission,
                         ),
                         const SizedBox(
                           height: 32.0,

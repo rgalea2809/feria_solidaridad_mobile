@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:feria_solidaridad/modules/institutions/model/institution.dart';
 
 class InstitutionsResponse {
-  InstitutionsResponseData data;
+  Institution data;
   int statusCode;
   String? error;
   String? message;
@@ -17,12 +17,13 @@ class InstitutionsResponse {
   });
 
   InstitutionsResponse.empty()
-      : data = InstitutionsResponseData.empty(),
+      : data = Institution.empty(),
         statusCode = 200;
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 
+    result.addAll({'data': data.toMap()});
     result.addAll({'statusCode': statusCode});
     if (error != null) {
       result.addAll({'error': error});
@@ -36,7 +37,7 @@ class InstitutionsResponse {
 
   factory InstitutionsResponse.fromMap(Map<String, dynamic> map) {
     return InstitutionsResponse(
-      data: InstitutionsResponseData.fromMap(map['data']),
+      data: Institution.fromMap(map['data']),
       statusCode: map['statusCode']?.toInt() ?? 0,
       error: map['error'],
       message: map['message'],
@@ -47,33 +48,4 @@ class InstitutionsResponse {
 
   factory InstitutionsResponse.fromJson(String source) =>
       InstitutionsResponse.fromMap(json.decode(source));
-}
-
-class InstitutionsResponseData {
-  Institution item;
-
-  InstitutionsResponseData({
-    required this.item,
-  });
-
-  InstitutionsResponseData.empty() : item = Institution.empty();
-
-  Map<String, dynamic> toMap() {
-    final result = <String, dynamic>{};
-
-    result.addAll({'item': item.toMap()});
-
-    return result;
-  }
-
-  factory InstitutionsResponseData.fromMap(Map<String, dynamic> map) {
-    return InstitutionsResponseData(
-      item: Institution.fromMap(map['item']),
-    );
-  }
-
-  String toJson() => json.encode(toMap());
-
-  factory InstitutionsResponseData.fromJson(String source) =>
-      InstitutionsResponseData.fromMap(json.decode(source));
 }

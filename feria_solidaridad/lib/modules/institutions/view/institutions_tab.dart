@@ -212,7 +212,7 @@ class InstitutionCard extends StatelessWidget {
               const SizedBox(
                 height: 16.0,
               ),
-              Text(institution.aboutUs ?? ""),
+              Text(institution.aboutUs),
               const SizedBox(
                 height: 16.0,
               ),
