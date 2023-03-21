@@ -1,5 +1,6 @@
 import 'package:feria_solidaridad/constants/debug_constants.dart';
 import 'package:feria_solidaridad/constants/theme_constants.dart';
+import 'package:feria_solidaridad/modules/institutions/model/project_preview.dart';
 import 'package:feria_solidaridad/modules/projects/model/project.dart';
 import 'package:feria_solidaridad/widgets/image_loader.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,7 @@ class ProjectDetailPage extends StatelessWidget {
     required this.project,
   });
 
-  final Project project;
+  final ProjectPreview project;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,7 @@ class ProjectDetailPage extends StatelessWidget {
 class ProjectDetailPageBody extends StatelessWidget {
   const ProjectDetailPageBody({super.key, required this.project});
 
-  final Project project;
+  final ProjectPreview project;
 
   @override
   Widget build(BuildContext context) {

@@ -1,14 +1,14 @@
-import 'package:feria_solidaridad/modules/projects/model/project.dart';
-import 'package:feria_solidaridad/modules/projects/model/projects_response.dart';
-import 'package:feria_solidaridad/modules/projects/viewmodel/services/projects_service.dart';
+import 'package:feria_solidaridad/modules/institutions/model/project_preview.dart';
+import 'package:feria_solidaridad/modules/projects/model/projects_preview_response.dart';
+import 'package:feria_solidaridad/modules/projects/viewmodel/services/projects_preview_service.dart';
 import 'package:flutter/material.dart';
 
 class ProjectsProvider extends ChangeNotifier {
   // Dependencies
-  ProjectsServiceType projectsService;
+  ProjectsPreviewServiceType projectsService;
 
   // Parameters
-  List<Project> currentProjects = [];
+  List<ProjectPreview> currentProjects = [];
   bool isFetchingData = false;
   int currentPage = 1;
   int numberOfPages = 0;
@@ -18,7 +18,7 @@ class ProjectsProvider extends ChangeNotifier {
   Future<void> fetchProjects() async {
     setLoadingState(true);
 
-    ProjectsResponse projectsData =
+    ProjectsPreviewResponse projectsData =
         await projectsService.fetchProjectsData(currentPage);
 
     currentProjects.clear();

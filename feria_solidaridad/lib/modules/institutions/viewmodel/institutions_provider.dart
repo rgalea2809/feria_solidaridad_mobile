@@ -1,14 +1,17 @@
 import 'package:feria_solidaridad/modules/institutions/model/institution.dart';
+import 'package:feria_solidaridad/modules/institutions/model/institution_preview.dart';
+import 'package:feria_solidaridad/modules/institutions/model/institutions_preview_response.dart';
 import 'package:feria_solidaridad/modules/institutions/model/institutions_response.dart';
+import 'package:feria_solidaridad/modules/institutions/viewmodel/services/institutions_preview_service.dart';
 import 'package:feria_solidaridad/modules/institutions/viewmodel/services/institutions_service.dart';
 import 'package:flutter/material.dart';
 
 class InstitutionsProvider extends ChangeNotifier {
   // Dependencies
-  InstitutionsServiceType institutionsService;
+  InstitutionsPreviewServiceType institutionsService;
 
   // Parameters
-  List<Institution> currentInstitutions = [];
+  List<InstitutionPreview> currentInstitutions = [];
   bool isFetchingData = false;
   int currentPage = 1;
   int numberOfPages = 0;
@@ -18,8 +21,8 @@ class InstitutionsProvider extends ChangeNotifier {
   Future<void> fetchInstitutions() async {
     setLoadingState(true);
 
-    InstitutionsResponse institutionsData =
-        await institutionsService.fetchInstitutionsData(currentPage);
+    InstitutionsPreviewResponse institutionsData =
+        await institutionsService.fetchInstitutionsPreviewData(currentPage);
 
     currentInstitutions.clear();
     currentInstitutions = institutionsData.data.items;

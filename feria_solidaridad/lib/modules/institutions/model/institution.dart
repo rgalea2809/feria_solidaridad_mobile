@@ -1,87 +1,85 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
+import 'package:feria_solidaridad/modules/institutions/model/contact_data.dart';
+import 'package:feria_solidaridad/modules/institutions/model/image_data.dart';
+import 'package:feria_solidaridad/modules/institutions/model/project_preview.dart';
 import 'package:feria_solidaridad/modules/projects/model/project.dart';
 
 class Institution {
   int id;
   String name;
-  String? logoUrl;
-  String? location;
-  String? aboutUs;
-  String? objective;
-  String? mission;
-  String? vision;
-  String? videoUrl;
-  List<Project>? projects;
-  List<String>? contacts;
+  String aboutUs;
+  String objective;
+  String mission;
+  String vision;
+  String videoUrl;
+  List<ProjectPreview> projects;
+  List<ImageData> images;
+  List<ContactData> contacts;
 
   Institution({
     required this.id,
     required this.name,
-    this.logoUrl,
-    this.location,
     required this.aboutUs,
     required this.objective,
     required this.mission,
     required this.vision,
-    this.videoUrl,
-    this.projects,
-    this.contacts,
+    required this.videoUrl,
+    required this.projects,
+    required this.images,
+    required this.contacts,
   });
 
-  // Placeholder constructor
-  Institution.placeholder()
+  Institution.empty()
       : id = 0,
-        name = "text",
-        logoUrl = null,
+        name = "",
         aboutUs = "",
         objective = "",
         mission = "",
-        vision = "";
+        vision = "",
+        videoUrl = "",
+        projects = [],
+        images = [],
+        contacts = [];
 
   Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'id': id,
-      'name': name,
-      'logoUrl': logoUrl,
-      'location': location,
-      'aboutUs': aboutUs,
-      'objective': objective,
-      'mission': mission,
-      'vision': vision,
-      'videoUrl': videoUrl,
-      'projects': projects?.map((x) => x.toMap()).toList(),
-      'contacts': contacts,
-    };
+    final result = <String, dynamic>{};
+
+    result.addAll({'id': id});
+    result.addAll({'name': name});
+    result.addAll({'aboutUs': aboutUs});
+    result.addAll({'objective': objective});
+    result.addAll({'mission': mission});
+    result.addAll({'vision': vision});
+    result.addAll({'videoUrl': videoUrl});
+    result.addAll({'projects': projects.map((x) => x.toMap()).toList()});
+    result.addAll({'images': images.map((x) => x.toMap()).toList()});
+    result.addAll({'contacts': contacts.map((x) => x.toMap()).toList()});
+
+    return result;
   }
 
   factory Institution.fromMap(Map<String, dynamic> map) {
     return Institution(
-      id: map['id'] as int,
-      name: map['name'] as String,
-      logoUrl: map['logoUrl'] != null ? map['logoUrl'] as String : null,
-      location: map['location'] != null ? map['location'] as String : null,
-      aboutUs: map['aboutUs'] != null ? map['aboutUs'] as String : null,
-      objective: map['objective'] != null ? map['objective'] as String : null,
-      mission: map['mission'] != null ? map['mission'] as String : null,
-      vision: map['vision'] != null ? map['vision'] as String : null,
-      videoUrl: map['videoUrl'] != null ? map['videoUrl'] as String : null,
-      projects: map['projects'] != null
-          ? List<Project>.from(
-              (map['projects'] as List<int>).map<Project?>(
-                (x) => Project.fromMap(x as Map<String, dynamic>),
-              ),
-            )
-          : null,
-      contacts: map['contacts'] != null
-          ? List<String>.from((map['contacts'] as List<String>))
-          : null,
+      id: map['id']?.toInt() ?? 0,
+      name: map['name'] ?? '',
+      aboutUs: map['aboutUs'] ?? '',
+      objective: map['objective'] ?? '',
+      mission: map['mission'] ?? '',
+      vision: map['vision'] ?? '',
+      videoUrl: map['videoUrl'] ?? '',
+      projects: List<ProjectPreview>.from(
+          map['projects']?.map((x) => ProjectPreview.fromMap(x))),
+      images:
+          List<ImageData>.from(map['images']?.map((x) => ImageData.fromMap(x))),
+      contacts: List<ContactData>.from(
+          map['contacts']?.map((x) => ContactData.fromMap(x))),
     );
   }
 
   String toJson() => json.encode(toMap());
 
   factory Institution.fromJson(String source) =>
-      Institution.fromMap(json.decode(source) as Map<String, dynamic>);
+      Institution.fromMap(json.decode(source));
 }

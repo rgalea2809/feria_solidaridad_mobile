@@ -1,9 +1,9 @@
 import 'package:feria_solidaridad/constants/app_constants.dart';
 import 'package:feria_solidaridad/constants/theme_constants.dart';
+import 'package:feria_solidaridad/modules/institutions/model/project_preview.dart';
 import 'package:feria_solidaridad/modules/project_detail/view/project_detail_page.dart';
-import 'package:feria_solidaridad/modules/projects/model/project.dart';
 import 'package:feria_solidaridad/modules/projects/viewmodel/projects_provider.dart';
-import 'package:feria_solidaridad/modules/projects/viewmodel/services/projects_service.dart';
+import 'package:feria_solidaridad/modules/projects/viewmodel/services/projects_preview_service.dart';
 import 'package:feria_solidaridad/networking/network_service.dart';
 import 'package:feria_solidaridad/widgets/image_loader.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +16,7 @@ class ProjectsTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => ProjectsProvider(
-        projectsService: ProjectsService(
+        projectsService: ProjectsPreviewService(
           networkService: NetworkService(
             baseUrl: kApiBaseUrl,
           ),
@@ -175,7 +175,7 @@ class ProjectsList extends StatelessWidget {
 class ProjectListCard extends StatelessWidget {
   const ProjectListCard({Key? key, required this.project}) : super(key: key);
 
-  final Project project;
+  final ProjectPreview project;
 
   @override
   Widget build(BuildContext context) {

@@ -1,107 +1,127 @@
+import 'package:feria_solidaridad/constants/app_constants.dart';
 import 'package:feria_solidaridad/constants/theme_constants.dart';
+import 'package:feria_solidaridad/modules/institution_detail/viewmodel/institution_detail_providert.dart';
+import 'package:feria_solidaridad/modules/institutions/model/contact_data.dart';
 import 'package:feria_solidaridad/modules/institutions/model/institution.dart';
+import 'package:feria_solidaridad/modules/institutions/model/institution_preview.dart';
+import 'package:feria_solidaridad/modules/institutions/model/project_preview.dart';
+import 'package:feria_solidaridad/modules/institutions/viewmodel/services/institutions_service.dart';
 import 'package:feria_solidaridad/modules/projects/model/project.dart';
 import 'package:feria_solidaridad/modules/projects/view/projects_tab.dart';
+import 'package:feria_solidaridad/networking/network_service.dart';
 import 'package:feria_solidaridad/widgets/image_loader.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class InstitutionDetailPage extends StatelessWidget {
   const InstitutionDetailPage({super.key, required this.currentInstitution});
 
-  final Institution currentInstitution;
+  final InstitutionPreview currentInstitution;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(currentInstitution.name),
-        backgroundColor: kPrimaryColor,
+    return ChangeNotifierProvider(
+      create: (context) => InstitutionDetailProvider(
+        institutionService: InstitutionsService(
+            networkService: NetworkService(baseUrl: kApiBaseUrl)),
+        institutionPreview: currentInstitution,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            /* // TODO: Change this for images
-            currentInstitution.images.isNotEmpty
-                ? ImagesHeader(
-                    imagesUrls: currentInstitution.images,
-                  )
-                : Container(),
-                */
-            Padding(
-              padding: const EdgeInsets.all(16.0),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(currentInstitution.name),
+          backgroundColor: kPrimaryColor,
+        ),
+        body: Consumer<InstitutionDetailProvider>(builder: (context, state, _) {
+          Institution? institution = state.institution;
+          if (institution != null) {
+            return SingleChildScrollView(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  TitleSection(
-                    title: currentInstitution.name,
-                    location: currentInstitution.location,
-                  ),
-                  const SizedBox(
-                    height: 32.0,
-                  ),
-                  InformationBullet(
-                    title: "¿Quienes somos?",
-                    body: currentInstitution.aboutUs ?? "",
-                  ),
-                  const SizedBox(
-                    height: 32.0,
-                  ),
-                  InformationBullet(
-                    title: "Objetivo",
-                    body: currentInstitution.objective ?? "",
-                  ),
-                  const SizedBox(
-                    height: 32.0,
-                  ),
-                  InformationBullet(
-                    title: "Mision",
-                    body: currentInstitution.mission ?? "",
-                  ),
-                  const SizedBox(
-                    height: 32.0,
-                  ),
-                  InformationBullet(
-                    title: "Vision",
-                    body: currentInstitution.vision ?? "",
-                  ),
-                  const SizedBox(
-                    height: 32.0,
-                  ),
-                  currentInstitution.videoUrl != null
-                      ? VideoSection(videoId: currentInstitution.videoUrl!)
-                      : Container(),
-                  const SizedBox(
-                    height: 32.0,
-                  ),
-                  currentInstitution.projects != null &&
-                          currentInstitution.projects!.isNotEmpty
-                      ? ProjectsSection(
-                          projects: currentInstitution.projects!,
+                  institution.images.isNotEmpty
+                      ? ImagesHeader(
+                          imagesUrls: institution.images
+                              .map<String>((e) => e.url)
+                              .toList(),
                         )
                       : Container(),
-                  const SizedBox(
-                    height: 32.0,
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      children: [
+                        TitleSection(
+                          title: institution.name,
+                        ),
+                        const SizedBox(
+                          height: 32.0,
+                        ),
+                        InformationBullet(
+                          title: "¿Quienes somos?",
+                          body: institution.aboutUs,
+                        ),
+                        const SizedBox(
+                          height: 32.0,
+                        ),
+                        InformationBullet(
+                          title: "Objetivo",
+                          body: institution.objective,
+                        ),
+                        const SizedBox(
+                          height: 32.0,
+                        ),
+                        InformationBullet(
+                          title: "Mision",
+                          body: institution.mission,
+                        ),
+                        const SizedBox(
+                          height: 32.0,
+                        ),
+                        InformationBullet(
+                          title: "Vision",
+                          body: institution.vision,
+                        ),
+                        const SizedBox(
+                          height: 32.0,
+                        ),
+                        institution.videoUrl.isNotEmpty
+                            ? VideoSection(videoId: institution.videoUrl)
+                            : Container(),
+                        const SizedBox(
+                          height: 32.0,
+                        ),
+                        institution.projects.isNotEmpty
+                            ? ProjectsSection(
+                                projects: institution.projects,
+                              )
+                            : Container(),
+                        const SizedBox(
+                          height: 32.0,
+                        ),
+                        institution.contacts.isNotEmpty
+                            ? ContactsSection(contacts: institution.contacts)
+                            : Container(),
+                      ],
+                    ),
                   ),
-                  currentInstitution.contacts != null &&
-                          currentInstitution.contacts!.isNotEmpty
-                      ? ContactsSection(contacts: currentInstitution.contacts!)
-                      : Container(),
                 ],
               ),
-            ),
-          ],
-        ),
+            );
+          }
+
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }),
       ),
     );
   }
 }
 
 class TitleSection extends StatelessWidget {
-  const TitleSection({super.key, required this.title, required this.location});
+  const TitleSection({super.key, required this.title});
 
   final String title;
-  final String? location;
 
   @override
   Widget build(BuildContext context) {
@@ -114,20 +134,6 @@ class TitleSection extends StatelessWidget {
         ),
         const SizedBox(
           height: 8.0,
-        ),
-        Row(
-          children: [
-            const Icon(
-              Icons.pin_drop,
-              color: kPrimaryColor,
-            ),
-            location != null
-                ? Text(
-                    location!,
-                    style: Theme.of(context).textTheme.subtitle1,
-                  )
-                : Container(),
-          ],
         ),
       ],
     );
@@ -163,7 +169,7 @@ class InformationBullet extends StatelessWidget {
 // Projects section
 class ProjectsSection extends StatelessWidget {
   const ProjectsSection({super.key, required this.projects});
-  final List<Project> projects;
+  final List<ProjectPreview> projects;
 
   @override
   Widget build(BuildContext context) {
@@ -190,7 +196,7 @@ class ProjectsSection extends StatelessWidget {
 class ContactsSection extends StatelessWidget {
   const ContactsSection({super.key, required this.contacts});
 
-  final List<String> contacts;
+  final List<ContactData> contacts;
 
   @override
   Widget build(BuildContext context) {
@@ -210,7 +216,7 @@ class ContactsSection extends StatelessWidget {
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                contact,
+                contact.data,
                 style: Theme.of(context).textTheme.button,
               ),
             );

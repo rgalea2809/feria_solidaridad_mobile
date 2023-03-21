@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
+
 import 'package:feria_solidaridad/modules/institutions/model/institution.dart';
 
 class InstitutionsResponse {
@@ -49,32 +50,25 @@ class InstitutionsResponse {
 }
 
 class InstitutionsResponseData {
-  InstitutionsResponseMetaData meta;
-  List<Institution> items;
+  Institution item;
 
   InstitutionsResponseData({
-    required this.meta,
-    required this.items,
+    required this.item,
   });
 
-  InstitutionsResponseData.empty()
-      : meta = InstitutionsResponseMetaData.empty(),
-        items = [];
+  InstitutionsResponseData.empty() : item = Institution.empty();
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 
-    result.addAll({'meta': meta.toMap()});
-    result.addAll({'items': items.map((x) => x.toMap()).toList()});
+    result.addAll({'item': item.toMap()});
 
     return result;
   }
 
   factory InstitutionsResponseData.fromMap(Map<String, dynamic> map) {
     return InstitutionsResponseData(
-      meta: InstitutionsResponseMetaData.fromMap(map['meta']),
-      items: List<Institution>.from(
-          map['items']?.map((x) => Institution.fromMap(x))),
+      item: Institution.fromMap(map['item']),
     );
   }
 
@@ -82,54 +76,4 @@ class InstitutionsResponseData {
 
   factory InstitutionsResponseData.fromJson(String source) =>
       InstitutionsResponseData.fromMap(json.decode(source));
-}
-
-class InstitutionsResponseMetaData {
-  int totalItems;
-  int itemCount;
-  int itemsPerPage;
-  int totalPages;
-  int currentPage;
-
-  InstitutionsResponseMetaData({
-    required this.totalItems,
-    required this.itemCount,
-    required this.itemsPerPage,
-    required this.totalPages,
-    required this.currentPage,
-  });
-
-  InstitutionsResponseMetaData.empty()
-      : totalItems = 0,
-        itemCount = 0,
-        itemsPerPage = 0,
-        totalPages = 0,
-        currentPage = 0;
-
-  Map<String, dynamic> toMap() {
-    final result = <String, dynamic>{};
-
-    result.addAll({'totalItems': totalItems});
-    result.addAll({'itemCount': itemCount});
-    result.addAll({'itemsPerPage': itemsPerPage});
-    result.addAll({'totalPages': totalPages});
-    result.addAll({'currentPage': currentPage});
-
-    return result;
-  }
-
-  factory InstitutionsResponseMetaData.fromMap(Map<String, dynamic> map) {
-    return InstitutionsResponseMetaData(
-      totalItems: map['totalItems']?.toInt() ?? 0,
-      itemCount: map['itemCount']?.toInt() ?? 0,
-      itemsPerPage: map['itemsPerPage']?.toInt() ?? 0,
-      totalPages: map['totalPages']?.toInt() ?? 0,
-      currentPage: map['currentPage']?.toInt() ?? 0,
-    );
-  }
-
-  String toJson() => json.encode(toMap());
-
-  factory InstitutionsResponseMetaData.fromJson(String source) =>
-      InstitutionsResponseMetaData.fromMap(json.decode(source));
 }

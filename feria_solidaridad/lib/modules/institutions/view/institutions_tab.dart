@@ -1,9 +1,9 @@
 import 'package:feria_solidaridad/constants/app_constants.dart';
 import 'package:feria_solidaridad/constants/theme_constants.dart';
 import 'package:feria_solidaridad/modules/institution_detail/view/institution_detail_page.dart';
-import 'package:feria_solidaridad/modules/institutions/model/institution.dart';
+import 'package:feria_solidaridad/modules/institutions/model/institution_preview.dart';
 import 'package:feria_solidaridad/modules/institutions/viewmodel/institutions_provider.dart';
-import 'package:feria_solidaridad/modules/institutions/viewmodel/services/institutions_service.dart';
+import 'package:feria_solidaridad/modules/institutions/viewmodel/services/institutions_preview_service.dart';
 import 'package:feria_solidaridad/networking/network_service.dart';
 import 'package:feria_solidaridad/widgets/image_loader.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +16,7 @@ class InstitutionsTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => InstitutionsProvider(
-        institutionsService: InstitutionsService(
+        institutionsService: InstitutionsPreviewService(
           networkService: NetworkService(
             baseUrl: kApiBaseUrl,
           ),
@@ -176,7 +176,7 @@ class InstitutionCard extends StatelessWidget {
     required this.institution,
   }) : super(key: key);
 
-  final Institution institution;
+  final InstitutionPreview institution;
 
   @override
   Widget build(BuildContext context) {
