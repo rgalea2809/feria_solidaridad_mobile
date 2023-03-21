@@ -32,87 +32,89 @@ class InstitutionDetailPage extends StatelessWidget {
           title: Text(currentInstitution.name),
           backgroundColor: kPrimaryColor,
         ),
-        body: Consumer<InstitutionDetailProvider>(builder: (context, state, _) {
-          Institution? institution = state.institution;
-          if (institution != null) {
-            return SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  institution.images.isNotEmpty
-                      ? ImagesHeader(
-                          imagesUrls: institution.images
-                              .map<String>((e) => e.url)
-                              .toList(),
-                        )
-                      : Container(),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      children: [
-                        TitleSection(
-                          title: institution.name,
-                        ),
-                        const SizedBox(
-                          height: 32.0,
-                        ),
-                        InformationBullet(
-                          title: "¿Quienes somos?",
-                          body: institution.aboutUs,
-                        ),
-                        const SizedBox(
-                          height: 32.0,
-                        ),
-                        InformationBullet(
-                          title: "Objetivo",
-                          body: institution.objective,
-                        ),
-                        const SizedBox(
-                          height: 32.0,
-                        ),
-                        InformationBullet(
-                          title: "Mision",
-                          body: institution.mission,
-                        ),
-                        const SizedBox(
-                          height: 32.0,
-                        ),
-                        InformationBullet(
-                          title: "Vision",
-                          body: institution.vission,
-                        ),
-                        const SizedBox(
-                          height: 32.0,
-                        ),
-                        institution.videoUrl.isNotEmpty
-                            ? VideoSection(videoId: institution.videoUrl)
-                            : Container(),
-                        const SizedBox(
-                          height: 32.0,
-                        ),
-                        institution.projects.isNotEmpty
-                            ? ProjectsSection(
-                                projects: institution.projects,
-                              )
-                            : Container(),
-                        const SizedBox(
-                          height: 32.0,
-                        ),
-                        institution.contacts.isNotEmpty
-                            ? ContactsSection(contacts: institution.contacts)
-                            : Container(),
-                      ],
+        body: Consumer<InstitutionDetailProvider>(
+          builder: (context, state, _) {
+            Institution? institution = state.institution;
+            if (institution != null) {
+              return SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    institution.images.isNotEmpty
+                        ? ImagesHeader(
+                            imagesUrls: institution.images
+                                .map<String>((e) => e.url)
+                                .toList(),
+                          )
+                        : Container(),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        children: [
+                          TitleSection(
+                            title: institution.name,
+                          ),
+                          const SizedBox(
+                            height: 32.0,
+                          ),
+                          InformationBullet(
+                            title: "¿Quienes somos?",
+                            body: institution.aboutUs,
+                          ),
+                          const SizedBox(
+                            height: 32.0,
+                          ),
+                          InformationBullet(
+                            title: "Objetivo",
+                            body: institution.objective,
+                          ),
+                          const SizedBox(
+                            height: 32.0,
+                          ),
+                          InformationBullet(
+                            title: "Mision",
+                            body: institution.mission,
+                          ),
+                          const SizedBox(
+                            height: 32.0,
+                          ),
+                          InformationBullet(
+                            title: "Vision",
+                            body: institution.vission,
+                          ),
+                          const SizedBox(
+                            height: 32.0,
+                          ),
+                          institution.videoUrl.isNotEmpty
+                              ? VideoSection(videoId: institution.videoUrl)
+                              : Container(),
+                          const SizedBox(
+                            height: 32.0,
+                          ),
+                          institution.projects.isNotEmpty
+                              ? ProjectsSection(
+                                  projects: institution.projects,
+                                )
+                              : Container(),
+                          const SizedBox(
+                            height: 32.0,
+                          ),
+                          institution.contacts.isNotEmpty
+                              ? ContactsSection(contacts: institution.contacts)
+                              : Container(),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            );
-          }
+                  ],
+                ),
+              );
+            }
 
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }),
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          },
+        ),
       ),
     );
   }
