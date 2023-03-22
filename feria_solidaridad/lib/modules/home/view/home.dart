@@ -2,9 +2,16 @@ import 'package:feria_solidaridad/constants/app_constants.dart';
 import 'package:feria_solidaridad/constants/assets_constants.dart';
 import 'package:feria_solidaridad/constants/debug_constants.dart';
 import 'package:feria_solidaridad/constants/theme_constants.dart';
+import 'package:feria_solidaridad/modules/home/model/home_data_response.dart';
+import 'package:feria_solidaridad/modules/home/model/images_response.dart';
 import 'package:feria_solidaridad/modules/home/model/social_link_data.dart';
+import 'package:feria_solidaridad/modules/home/viewmodel/home_provider.dart';
+import 'package:feria_solidaridad/modules/home/viewmodel/services/home_service.dart';
+import 'package:feria_solidaridad/modules/home/viewmodel/services/images_service.dart';
+import 'package:feria_solidaridad/networking/network_service.dart';
 import 'package:feria_solidaridad/widgets/image_gallery_scroller.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class Home extends StatelessWidget {
@@ -12,46 +19,76 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: kPrimaryColor,
-      body: CustomScrollView(
-        slivers: [
-          const HomeAppBar(),
-          const HomeWelcomeSection(),
-          const HomeMediaSection(),
-          HomeFooter(
-            socialLinks: [
-              SocialLinkData(
-                url: kFacebookPageUrl,
-                icon: const Icon(Icons.facebook),
-                displayName: "Facebook/UcaServicioSocial",
-              ),
-              SocialLinkData(
-                url: kContactEmail,
-                icon: const Icon(Icons.email),
-                displayName: "css@uca.edu.sv",
+    return ChangeNotifierProvider(
+      create: (context) => HomeProvider(
+        homeService: HomeService(
+          networkService: NetworkService(
+            baseUrl: kApiBaseUrl,
+          ),
+        ),
+        imagesService: ImagesService(
+          networkService: NetworkService(
+            baseUrl: kApiBaseUrl,
+          ),
+        ),
+      )..fetchHomeData(),
+      child: Scaffold(
+        backgroundColor: kPrimaryColor,
+        body: Consumer<HomeProvider>(builder: (context, state, _) {
+          HomeDataResponseData? homeData = state.homeData;
+          List<ImagesData> imagesData = state.images;
+
+          if (homeData != null) {
+            return CustomScrollView(
+              slivers: [
+                const HomeAppBar(),
+                HomeWelcomeSection(
+                  homeData: homeData,
+                ),
+                HomeMediaSection(
+                  homeData: homeData,
+                  imagesData: imagesData,
+                ),
+                HomeFooter(
+                  socialLinks: [
+                    SocialLinkData(
+                      url: kFacebookPageUrl,
+                      icon: const Icon(Icons.facebook),
+                      displayName: "Facebook/UcaServicioSocial",
+                    ),
+                    SocialLinkData(
+                      url: kContactEmail,
+                      icon: const Icon(Icons.email),
+                      displayName: "css@uca.edu.sv",
+                    ),
+                  ],
+                ),
+              ],
+            );
+          }
+
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }),
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: [
+              DrawerHeader(
+                decoration: const BoxDecoration(
+                  color: kPrimaryColor,
+                ),
+                child: Text(
+                  'Bienvenido',
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline6
+                      ?.copyWith(color: Colors.white),
+                ),
               ),
             ],
           ),
-        ],
-      ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            DrawerHeader(
-              decoration: const BoxDecoration(
-                color: kPrimaryColor,
-              ),
-              child: Text(
-                'Bienvenido',
-                style: Theme.of(context)
-                    .textTheme
-                    .headline6
-                    ?.copyWith(color: Colors.white),
-              ),
-            ),
-          ],
         ),
       ),
     );
@@ -93,7 +130,12 @@ class HomeAppBar extends StatelessWidget {
 }
 
 class HomeWelcomeSection extends StatelessWidget {
-  const HomeWelcomeSection({super.key});
+  const HomeWelcomeSection({
+    super.key,
+    required this.homeData,
+  });
+
+  final HomeDataResponseData homeData;
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +146,7 @@ class HomeWelcomeSection extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "$kFairEditionNumber Feria de la Solidaridad",
+              "${homeData.yearEdition} Feria de la Solidaridad",
               style: Theme.of(context).textTheme.overline?.copyWith(
                     color: Colors.white,
                   ),
@@ -117,7 +159,7 @@ class HomeWelcomeSection extends StatelessWidget {
             ),
             const SizedBox(
               height: 16.0,
-            ),
+            ), /*
             Container(
               constraints: const BoxConstraints(maxHeight: 400),
               child: Row(
@@ -175,7 +217,7 @@ class HomeWelcomeSection extends StatelessWidget {
                   ),
                 ],
               ),
-            )
+            )*/
           ],
         ),
       ),
@@ -184,7 +226,14 @@ class HomeWelcomeSection extends StatelessWidget {
 }
 
 class HomeMediaSection extends StatelessWidget {
-  const HomeMediaSection({super.key});
+  const HomeMediaSection({
+    super.key,
+    required this.homeData,
+    required this.imagesData,
+  });
+
+  final HomeDataResponseData homeData;
+  final List<ImagesData> imagesData;
 
   @override
   Widget build(BuildContext context) {
@@ -229,14 +278,16 @@ class HomeMediaSection extends StatelessWidget {
                             const SizedBox(
                               height: 16.0,
                             ),
-                            HomeYoutubeVideo(),
+                            HomeYoutubeVideo(
+                              videoId: homeData.videoId,
+                            ),
                             const SizedBox(
                               height: 16.0,
                             ),
                             Padding(
                               padding: const EdgeInsets.all(16.0),
                               child: Text(
-                                "\"$kLoremParagraph\"",
+                                "\"${homeData.message}\"",
                                 style: Theme.of(context).textTheme.subtitle1,
                                 textAlign: TextAlign.center,
                               ),
@@ -245,7 +296,7 @@ class HomeMediaSection extends StatelessWidget {
                               height: 8.0,
                             ),
                             Text(
-                              "P. Andreu Oliva",
+                              homeData.messageAuthor,
                               style: Theme.of(context).textTheme.overline,
                               textAlign: TextAlign.center,
                             ),
@@ -271,13 +322,9 @@ class HomeMediaSection extends StatelessWidget {
                                   ),
                             ),
                           ),
-                          const ImageGalleryScroller(
-                            imageUrls: ["", "asd", "", "", ""],
-                            delay: Duration(),
-                          ),
-                          const ImageGalleryScroller(
-                            imageUrls: ["", "asd", "", "", ""],
-                            delay: Duration(milliseconds: 2500),
+                          ImageGalleryScroller(
+                            imagesData: imagesData,
+                            delay: const Duration(milliseconds: 2500),
                           ),
                         ],
                       ),
@@ -294,20 +341,20 @@ class HomeMediaSection extends StatelessWidget {
 }
 
 class HomeYoutubeVideo extends StatelessWidget {
-  HomeYoutubeVideo({super.key});
+  HomeYoutubeVideo({super.key, required this.videoId});
 
-  final YoutubePlayerController _controller = YoutubePlayerController(
-    initialVideoId: kRectorVideoId,
-    flags: const YoutubePlayerFlags(
-      autoPlay: false,
-      mute: false,
-    ),
-  );
+  final String videoId;
 
   @override
   Widget build(BuildContext context) {
     return YoutubePlayer(
-      controller: _controller,
+      controller: YoutubePlayerController(
+        initialVideoId: videoId,
+        flags: const YoutubePlayerFlags(
+          autoPlay: false,
+          mute: false,
+        ),
+      ),
       showVideoProgressIndicator: true,
       progressColors: const ProgressBarColors(
         playedColor: kPrimaryColor,
