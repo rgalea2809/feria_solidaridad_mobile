@@ -9,6 +9,7 @@ import 'package:feria_solidaridad/modules/institutions/model/project_preview.dar
 import 'package:feria_solidaridad/modules/institutions/viewmodel/services/institutions_service.dart';
 import 'package:feria_solidaridad/modules/projects/view/projects_tab.dart';
 import 'package:feria_solidaridad/networking/network_service.dart';
+import 'package:feria_solidaridad/widgets/image_gallery_scroller.dart';
 import 'package:feria_solidaridad/widgets/image_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -373,7 +374,18 @@ class _ImagesHeaderState extends State<ImagesHeader> {
             pageSnapping: true,
             controller: _pageController,
             itemBuilder: (context, index) {
-              return ImageLoader(imageUrl: widget.imagesUrls[index]);
+              return GestureDetector(
+                onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => ImageViewer(
+                      imageUrl: widget.imagesUrls[index],
+                    ),
+                  ),
+                ),
+                child: ImageLoader(
+                  imageUrl: widget.imagesUrls[index],
+                ),
+              );
             },
             itemCount: widget.imagesUrls.length,
           ),

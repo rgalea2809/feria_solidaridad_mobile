@@ -12,7 +12,6 @@ import 'package:feria_solidaridad/widgets/image_gallery_scroller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
