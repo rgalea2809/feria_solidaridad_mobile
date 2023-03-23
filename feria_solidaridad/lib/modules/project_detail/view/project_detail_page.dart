@@ -171,6 +171,7 @@ class ProjectDetailPageBody extends StatelessWidget {
                 const SizedBox(
                   height: 32.0,
                 ),
+                /*
                 Align(
                   alignment: Alignment.center,
                   child: ElevatedButton(
@@ -190,7 +191,7 @@ class ProjectDetailPageBody extends StatelessWidget {
                       ],
                     ),
                   ),
-                ),
+                ),*/
                 const SizedBox(
                   height: 32.0,
                 ),
