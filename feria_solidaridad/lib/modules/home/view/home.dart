@@ -11,6 +11,7 @@ import 'package:feria_solidaridad/networking/network_service.dart';
 import 'package:feria_solidaridad/widgets/image_gallery_scroller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class Home extends StatelessWidget {
@@ -260,51 +261,68 @@ class HomeMediaSection extends StatelessWidget {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            Text(
-                              "Un mensaje del Rector",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline6
-                                  ?.copyWith(
-                                    color: kAccentColor,
+                      homeData.videoHomeUrl.isNotEmpty
+                          ? Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 8.0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
+                                    children: [
+                                      Text(
+                                        "Un mensaje del Rector",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline6
+                                            ?.copyWith(
+                                              color: kAccentColor,
+                                            ),
+                                      ),
+                                      const SizedBox(
+                                        height: 16.0,
+                                      ),
+                                      Container(
+                                        constraints: const BoxConstraints(
+                                            maxHeight: 200),
+                                        child: HomeYoutubeVideo(
+                                          videoUrl: homeData.videoHomeUrl,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 16.0,
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(16.0),
+                                        child: Text(
+                                          "\"${homeData.message}\"",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .subtitle1,
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 8.0,
+                                      ),
+                                      Text(
+                                        homeData.messageAuthor,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .overline,
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ],
                                   ),
-                            ),
-                            const SizedBox(
-                              height: 16.0,
-                            ),
-                            HomeYoutubeVideo(
-                              videoId: homeData.videoId,
-                            ),
-                            const SizedBox(
-                              height: 16.0,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Text(
-                                "\"${homeData.message}\"",
-                                style: Theme.of(context).textTheme.subtitle1,
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 8.0,
-                            ),
-                            Text(
-                              homeData.messageAuthor,
-                              style: Theme.of(context).textTheme.overline,
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 32.0,
-                      ),
+                                ),
+                                const SizedBox(
+                                  height: 32.0,
+                                ),
+                              ],
+                            )
+                          : Container(),
                       Column(
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -339,26 +357,68 @@ class HomeMediaSection extends StatelessWidget {
   }
 }
 
-class HomeYoutubeVideo extends StatelessWidget {
-  HomeYoutubeVideo({super.key, required this.videoId});
+// Home Youtube video
+class HomeYoutubeVideo extends StatefulWidget {
+  const HomeYoutubeVideo({super.key, required this.videoUrl});
 
-  final String videoId;
+  final String videoUrl;
+
+  @override
+  State<HomeYoutubeVideo> createState() => _HomeYoutubeVideoState();
+}
+
+class _HomeYoutubeVideoState extends State<HomeYoutubeVideo> {
+  late WebViewController controller;
+  double loadingPercentage = 0;
+
+  @override
+  void initState() {
+    controller = WebViewController()
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setBackgroundColor(const Color(0x00000000))
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onProgress: (int progress) {
+            setState(() {
+              loadingPercentage = progress / 100;
+            });
+          },
+          onPageStarted: (String url) {},
+          onPageFinished: (String url) {},
+          onWebResourceError: (WebResourceError error) {},
+          onNavigationRequest: (NavigationRequest request) {
+            return NavigationDecision.navigate;
+          },
+        ),
+      )
+      ..loadRequest(
+        Uri.parse(
+          widget.videoUrl,
+        ),
+      );
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return YoutubePlayer(
-      controller: YoutubePlayerController(
-        initialVideoId: videoId,
-        flags: const YoutubePlayerFlags(
-          autoPlay: false,
-          mute: false,
-        ),
-      ),
-      showVideoProgressIndicator: true,
-      progressColors: const ProgressBarColors(
-        playedColor: kPrimaryColor,
-        handleColor: kSecondaryColor,
-      ),
+    return Stack(
+      children: [
+        WebViewWidget(controller: controller),
+        loadingPercentage < 1
+            ? Align(
+                alignment: Alignment.center,
+                child: CircularProgressIndicator(
+                  value: loadingPercentage,
+                ),
+              )
+            : Container(),
+      ],
     );
   }
 }
