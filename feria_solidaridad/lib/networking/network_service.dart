@@ -30,7 +30,7 @@ class NetworkService implements NetworkServiceType {
   Future<NetworkResponse> executeGet(
     NetworkRequest request,
   ) async {
-    var url = Uri.https(baseUrl, request.path);
+    var url = Uri.https(baseUrl, request.path, request.queryParams);
     var response = await http.get(url, headers: request.headers);
 
     if (response.statusCode != 200) {
@@ -48,7 +48,7 @@ class NetworkService implements NetworkServiceType {
   Future<NetworkResponse> executePost(
     NetworkRequest request,
   ) async {
-    var url = Uri.https(baseUrl, request.path);
+    var url = Uri.https(baseUrl, request.path, request.queryParams);
     var response =
         await http.post(url, body: request.data.body, headers: request.headers);
 

@@ -21,7 +21,7 @@ class InstitutionsPreviewService implements InstitutionsPreviewServiceType {
       type: NetworkRequestType.GET,
       path: kApiPaths[ApiPath.getAllInstitutions] ?? "",
       data: NetworkRequestBody.empty(),
-      queryParams: {'page': page},
+      queryParams: {'page': page.toString(), 'limit': 4.toString()},
     );
 
     NetworkResponse response = await networkService.execute(request);
