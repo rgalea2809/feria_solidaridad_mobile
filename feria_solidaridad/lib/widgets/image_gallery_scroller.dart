@@ -68,14 +68,37 @@ class _ImageGalleryScrollerState extends State<ImageGalleryScroller> {
                 color: index % 2 == 0 ? Colors.red : Colors.blue,
                 borderRadius: BorderRadius.circular(20),
               ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: ImageLoader(imageUrl: widget.imagesData[index].url),
+              child: GestureDetector(
+                onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => ImageViewer(
+                    imageUrl: widget.imagesData[index].url,
+                  ),
+                )),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: ImageLoader(imageUrl: widget.imagesData[index].url),
+                ),
               ),
             ),
           );
         },
         itemCount: widget.imagesData.length,
+      ),
+    );
+  }
+}
+
+class ImageViewer extends StatelessWidget {
+  const ImageViewer({super.key, required this.imageUrl});
+
+  final String imageUrl;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(),
+      body: Center(
+        child: ImageLoader(imageUrl: imageUrl),
       ),
     );
   }
