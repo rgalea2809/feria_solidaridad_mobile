@@ -12,7 +12,7 @@ import 'package:feria_solidaridad/networking/network_service.dart';
 import 'package:feria_solidaridad/widgets/image_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class InstitutionDetailPage extends StatelessWidget {
   const InstitutionDetailPage({super.key, required this.currentInstitution});
@@ -59,10 +59,12 @@ class InstitutionDetailPage extends StatelessWidget {
                           const SizedBox(
                             height: 32.0,
                           ),
-                          InformationBullet(
-                            title: "¿Quienes somos?",
-                            body: institution.aboutUs,
-                          ),
+                          institution.aboutUs.isNotEmpty
+                              ? InformationBullet(
+                                  title: "¿Quienes somos?",
+                                  body: institution.aboutUs,
+                                )
+                              : Container(),
                           const SizedBox(
                             height: 32.0,
                           ),
@@ -88,7 +90,12 @@ class InstitutionDetailPage extends StatelessWidget {
                             height: 32.0,
                           ),
                           institution.videoUrl.isNotEmpty
-                              ? VideoSection(videoId: institution.videoUrl)
+                              ? Container(
+                                  constraints:
+                                      const BoxConstraints(maxHeight: 200),
+                                  child: VideoSection(
+                                      videoUrl: institution.videoUrl),
+                                )
                               : Container(),
                           const SizedBox(
                             height: 32.0,
@@ -265,39 +272,66 @@ class ContactsSection extends StatelessWidget {
 
 /// Video Section
 class VideoSection extends StatefulWidget {
-  const VideoSection({super.key, required this.videoId});
+  const VideoSection({super.key, required this.videoUrl});
 
-  final String videoId;
+  final String videoUrl;
 
   @override
   State<VideoSection> createState() => _VideoSectionState();
 }
 
 class _VideoSectionState extends State<VideoSection> {
-  late YoutubePlayerController _controller;
+  late WebViewController controller;
+  double loadingPercentage = 0;
 
   @override
   void initState() {
-    _controller = YoutubePlayerController(
-      initialVideoId: widget.videoId,
-      flags: const YoutubePlayerFlags(
-        autoPlay: false,
-        mute: false,
-      ),
-    );
+    controller = WebViewController()
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setBackgroundColor(const Color(0x00000000))
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onProgress: (int progress) {
+            setState(() {
+              loadingPercentage = progress / 100;
+            });
+          },
+          onPageStarted: (String url) {},
+          onPageFinished: (String url) {},
+          onWebResourceError: (WebResourceError error) {},
+          onNavigationRequest: (NavigationRequest request) {
+            return NavigationDecision.navigate;
+          },
+        ),
+      )
+      ..loadRequest(
+        Uri.parse(
+          widget.videoUrl,
+        ),
+      );
 
     super.initState();
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return YoutubePlayer(
-      controller: _controller,
-      showVideoProgressIndicator: true,
-      progressColors: const ProgressBarColors(
-        playedColor: kPrimaryColor,
-        handleColor: kSecondaryColor,
-      ),
+    return Stack(
+      children: [
+        WebViewWidget(controller: controller),
+        loadingPercentage < 1
+            ? Align(
+                alignment: Alignment.center,
+                child: CircularProgressIndicator(
+                  value: loadingPercentage,
+                ),
+              )
+            : Container(),
+      ],
     );
   }
 }

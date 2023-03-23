@@ -40,7 +40,7 @@ class ImagesResponse {
 
 class ImagesData {
   String url;
-  String alt;
+  String? alt;
   ImagesData({
     required this.url,
     required this.alt,
@@ -56,7 +56,7 @@ class ImagesData {
   factory ImagesData.fromMap(Map<String, dynamic> map) {
     return ImagesData(
       url: map['url'] as String,
-      alt: map['alt'] as String,
+      alt: map['alt'] as String?,
     );
   }
 
