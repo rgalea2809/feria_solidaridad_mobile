@@ -68,24 +68,30 @@ class InstitutionDetailPage extends StatelessWidget {
                           const SizedBox(
                             height: 32.0,
                           ),
-                          InformationBullet(
-                            title: "Objetivo",
-                            body: institution.objective,
-                          ),
+                          institution.objective.isNotEmpty
+                              ? InformationBullet(
+                                  title: "Objetivo",
+                                  body: institution.objective,
+                                )
+                              : Container(),
                           const SizedBox(
                             height: 32.0,
                           ),
-                          InformationBullet(
-                            title: "Mision",
-                            body: institution.mission,
-                          ),
+                          institution.mission.isNotEmpty
+                              ? InformationBullet(
+                                  title: "Mision",
+                                  body: institution.mission,
+                                )
+                              : Container(),
                           const SizedBox(
                             height: 32.0,
                           ),
-                          InformationBullet(
-                            title: "Vision",
-                            body: institution.vission,
-                          ),
+                          institution.vission.isNotEmpty
+                              ? InformationBullet(
+                                  title: "Vision",
+                                  body: institution.vission,
+                                )
+                              : Container(),
                           const SizedBox(
                             height: 32.0,
                           ),

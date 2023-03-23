@@ -93,33 +93,43 @@ class ProjectDetailPageBody extends StatelessWidget {
                 const SizedBox(
                   height: 16.0,
                 ),
-                Text(project.description),
+                project.description.isNotEmpty
+                    ? Text(project.description)
+                    : Container(),
                 const SizedBox(
                   height: 32.0,
                 ),
-                Text(
-                  "Actividades a Desarrollar",
-                  style: Theme.of(context).textTheme.subtitle1,
-                ),
+                project.activities.isNotEmpty
+                    ? Text(
+                        "Actividades a Desarrollar",
+                        style: Theme.of(context).textTheme.subtitle1,
+                      )
+                    : Container(),
                 const SizedBox(
                   height: 8.0,
                 ),
-                _bulletedSection(
-                  project.activities,
-                ),
+                project.activities.isNotEmpty
+                    ? _bulletedSection(
+                        project.activities,
+                      )
+                    : Container(),
                 const SizedBox(
                   height: 32.0,
                 ),
-                Text(
-                  "Perfil del Estudiante",
-                  style: Theme.of(context).textTheme.subtitle1,
-                ),
+                project.requirements.isNotEmpty
+                    ? Text(
+                        "Perfil del Estudiante",
+                        style: Theme.of(context).textTheme.subtitle1,
+                      )
+                    : Container(),
                 const SizedBox(
                   height: 8.0,
                 ),
-                _bulletedSection(
-                  project.requirements,
-                ),
+                project.requirements.isNotEmpty
+                    ? _bulletedSection(
+                        project.requirements,
+                      )
+                    : Container(),
                 const SizedBox(
                   height: 32.0,
                 ),
@@ -131,40 +141,25 @@ class ProjectDetailPageBody extends StatelessWidget {
                   project.modality,
                   context,
                 ),
-                const SizedBox(
-                  height: 16.0,
-                ),
                 _richTextSection(
                   "Lugar: ",
                   project.place,
                   context,
-                ),
-                const SizedBox(
-                  height: 16.0,
                 ),
                 _richTextSection(
                   "Cantidad de horas a obtener: ",
                   project.hours.toString(),
                   context,
                 ),
-                const SizedBox(
-                  height: 16.0,
-                ),
                 _richTextSection(
                   "Número de plazas disponibles: ",
                   project.vacants.toString(),
                   context,
                 ),
-                const SizedBox(
-                  height: 16.0,
-                ),
                 _richTextSection(
                   "Horario: ",
                   project.schedules.toString(),
                   context,
-                ),
-                const SizedBox(
-                  height: 16.0,
                 ),
                 project.contacts.isNotEmpty
                     ? _richTextSection(
@@ -240,22 +235,32 @@ class ProjectDetailPageBody extends StatelessWidget {
   }
 
   Widget _richTextSection(String prefix, String sufix, BuildContext context) {
-    return RichText(
-      text: TextSpan(
-        text: prefix,
-        style: const TextStyle(
-          fontWeight: FontWeight.bold,
-          color: Colors.black,
-        ),
-        children: <TextSpan>[
-          TextSpan(
-            text: sufix,
-            style: const TextStyle(
-              fontWeight: FontWeight.normal,
-            ),
-          ),
-        ],
-      ),
-    );
+    return sufix.isEmpty || sufix == "0"
+        ? Container()
+        : Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              RichText(
+                text: TextSpan(
+                  text: prefix,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                  children: <TextSpan>[
+                    TextSpan(
+                      text: sufix,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.normal,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 16.0,
+              ),
+            ],
+          );
   }
 }
