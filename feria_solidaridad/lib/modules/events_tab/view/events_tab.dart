@@ -17,7 +17,7 @@ class EventsTab extends StatelessWidget {
         eventsService: EventsService(
           networkService: NetworkService(baseUrl: kApiBaseUrl),
         ),
-        urlLauncherService: UrlLauncherServiceMock(),
+        urlLauncherService: UrlLauncherService(),
       )..loadEvents(),
       child: Scaffold(
         appBar: AppBar(

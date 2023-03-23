@@ -1,4 +1,5 @@
 import 'package:feria_solidaridad/constants/app_constants.dart';
+import 'package:feria_solidaridad/constants/theme_constants.dart';
 import 'package:feria_solidaridad/modules/core/core_services/url_launcher_service.dart';
 import 'package:feria_solidaridad/modules/institutions/model/project_preview.dart';
 import 'package:feria_solidaridad/modules/project_detail/viewmodel/project_detail_provider.dart';
@@ -30,7 +31,9 @@ class ProjectDetailPage extends StatelessWidget {
         projectPreview: project,
       )..fetchProject(),
       child: Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          backgroundColor: kPrimaryColor,
+        ),
         body: Consumer<ProjectDetailProvider>(builder: (context, state, _) {
           Project? currentProject = state.project;
           if (currentProject != null) {
@@ -163,11 +166,13 @@ class ProjectDetailPageBody extends StatelessWidget {
                 const SizedBox(
                   height: 16.0,
                 ),
-                _richTextSection(
-                  "Contacto: ",
-                  project.contacts[0].data,
-                  context,
-                ),
+                project.contacts.isNotEmpty
+                    ? _richTextSection(
+                        "Contacto: ",
+                        project.contacts[0].data,
+                        context,
+                      )
+                    : Container(),
                 const SizedBox(
                   height: 32.0,
                 ),
