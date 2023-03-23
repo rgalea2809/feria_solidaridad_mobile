@@ -1,5 +1,6 @@
 import 'package:feria_solidaridad/constants/app_constants.dart';
 import 'package:feria_solidaridad/constants/theme_constants.dart';
+import 'package:feria_solidaridad/modules/core/core_services/url_launcher_service.dart';
 import 'package:feria_solidaridad/modules/institution_detail/viewmodel/institution_detail_providert.dart';
 import 'package:feria_solidaridad/modules/institutions/model/contact_data.dart';
 import 'package:feria_solidaridad/modules/institutions/model/institution.dart';
@@ -26,6 +27,7 @@ class InstitutionDetailPage extends StatelessWidget {
           networkService: NetworkService(baseUrl: kApiBaseUrl),
         ),
         institutionPreview: currentInstitution,
+        urlLauncherService: UrlLauncherService(),
       )..fetchInstitution(),
       child: Scaffold(
         appBar: AppBar(
@@ -217,15 +219,47 @@ class ContactsSection extends StatelessWidget {
           (contact) {
             return Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text(
-                contact.data,
-                style: Theme.of(context).textTheme.button,
+              child: GestureDetector(
+                onTap: () async {
+                  await Provider.of<InstitutionDetailProvider>(context,
+                          listen: false)
+                      .launchUrl(contact.data);
+                },
+                child: Row(
+                  children: [
+                    _getContactIcon(contact.type),
+                    const SizedBox(
+                      width: 8.0,
+                    ),
+                    Flexible(
+                      child: Text(
+                        contact.data,
+                        style: Theme.of(context).textTheme.button,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             );
           },
         ),
       ],
     );
+  }
+
+  Icon _getContactIcon(String type) {
+    switch (type) {
+      case "facebook":
+        {
+          return Icon(Icons.facebook);
+        }
+      case "instagram":
+        {
+          return Icon(Icons.image);
+        }
+    }
+
+    return const Icon(Icons.message);
   }
 }
 

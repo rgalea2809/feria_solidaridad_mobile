@@ -9,9 +9,8 @@ class UrlLauncherService implements UrlLauncherServiceType {
   Future<void> openUrl(String url) async {
     try {
       Uri? uri = Uri.parse(url);
-      print(uri);
       if (await canLaunchUrl(uri)) {
-        await launchUrl(uri);
+        await launchUrl(uri, mode: LaunchMode.externalApplication);
       } else {
         print("Cannot launch url");
       }
@@ -26,7 +25,6 @@ class UrlLauncherServiceMock implements UrlLauncherServiceType {
   Future<void> openUrl(String url) async {
     try {
       Uri? uri = Uri.parse("https://www.fluttercampus.com");
-      print(uri);
       if (await canLaunchUrl(uri)) {
         await launchUrl(uri);
       } else {
