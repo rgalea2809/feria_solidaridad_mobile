@@ -21,7 +21,6 @@ class ProjectsPreviewService implements ProjectsPreviewServiceType {
       type: NetworkRequestType.GET,
       path: kApiPaths[ApiPath.getAllProjects] ?? "",
       data: NetworkRequestBody.empty(),
-      queryParams: {'page': page},
     );
 
     NetworkResponse response = await networkService.execute(request);

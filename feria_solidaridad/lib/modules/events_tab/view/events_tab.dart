@@ -57,7 +57,10 @@ class EventsListSection extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(state.events[index].name),
+                    Flexible(child: Text(state.events[index].name)),
+                    SizedBox(
+                      width: 8.0,
+                    ),
                     OutlinedButton(
                       onPressed: () async {
                         await state.launchUrl(state.events[index].hyperlink);
