@@ -271,15 +271,6 @@ class HomeMediaSection extends StatelessWidget {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.stretch,
                                     children: [
-                                      Text(
-                                        "Un mensaje del Rector",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headline6
-                                            ?.copyWith(
-                                              color: kAccentColor,
-                                            ),
-                                      ),
                                       const SizedBox(
                                         height: 16.0,
                                       ),
