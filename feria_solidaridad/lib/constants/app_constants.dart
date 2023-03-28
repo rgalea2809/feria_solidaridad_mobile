@@ -26,3 +26,6 @@ const Map<ApiPath, String> kApiPaths = {
   ApiPath.getHomeData: "/home-page",
   ApiPath.getAllImages: "/images",
 };
+
+// Form
+String kInscriptionFormUrl = "https://forms.gle/7jRmeJHrCpGYAsfR9";
