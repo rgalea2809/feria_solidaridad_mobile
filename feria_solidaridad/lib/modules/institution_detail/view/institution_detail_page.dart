@@ -265,11 +265,11 @@ class ContactsSection extends StatelessWidget {
     switch (type) {
       case "facebook":
         {
-          return Icon(Icons.facebook);
+          return const Icon(Icons.facebook);
         }
       case "instagram":
         {
-          return Icon(Icons.image);
+          return const Icon(Icons.image);
         }
     }
 
