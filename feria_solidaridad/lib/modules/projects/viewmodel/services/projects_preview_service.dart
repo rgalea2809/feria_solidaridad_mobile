@@ -1,6 +1,5 @@
 import 'package:feria_solidaridad/constants/app_constants.dart';
 import 'package:feria_solidaridad/modules/projects/model/projects_preview_response.dart';
-import 'package:feria_solidaridad/modules/projects/model/projects_response.dart';
 import 'package:feria_solidaridad/networking/network_request.dart';
 import 'package:feria_solidaridad/networking/network_request_body.dart';
 import 'package:feria_solidaridad/networking/network_response.dart';
