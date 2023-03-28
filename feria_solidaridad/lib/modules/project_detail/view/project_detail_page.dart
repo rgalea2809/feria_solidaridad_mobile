@@ -153,31 +153,24 @@ class ProjectDetailPageBody extends StatelessWidget {
                 ),
                 _richTextSection(
                   "Número de plazas disponibles: ",
-                  project.vacants.toString(),
+                  project.vacants.toString().replaceAll(RegExp(r'[[\]]'), ""),
                   context,
                 ),
                 _richTextSection(
                   "Horario: ",
-                  project.schedules.toString(),
+                  project.schedules.toString().replaceAll(RegExp(r'[[\]]'), ""),
                   context,
                 ),
-                project.contacts.isNotEmpty
-                    ? _richTextSection(
-                        "Contacto: ",
-                        project.contacts[0].data,
-                        context,
-                      )
-                    : Container(),
                 const SizedBox(
-                  height: 32.0,
+                  height: 8.0,
                 ),
-                /*
                 Align(
                   alignment: Alignment.center,
                   child: ElevatedButton(
-                    onPressed: () {
-                      Provider.of<ProjectDetailProvider>(context, listen: false)
-                          .launchUrl(project.formUrl);
+                    onPressed: () async {
+                      await Provider.of<ProjectDetailProvider>(context,
+                              listen: false)
+                          .launchUrl(kInscriptionFormUrl);
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -191,7 +184,29 @@ class ProjectDetailPageBody extends StatelessWidget {
                       ],
                     ),
                   ),
-                ),*/
+                ),
+                const SizedBox(
+                  height: 8.0,
+                ),
+                const SizedBox(
+                  height: 8.0,
+                ),
+                project.requirements.isNotEmpty
+                    ? Text(
+                        "Contactos",
+                        style: Theme.of(context).textTheme.subtitle1,
+                      )
+                    : Container(),
+                const SizedBox(
+                  height: 8.0,
+                ),
+                project.contacts.isNotEmpty
+                    ? _bulletedSection(
+                        project.contacts
+                            .map((e) => e.data.replaceAll(RegExp(r'[[\]]'), ""))
+                            .toList(),
+                      )
+                    : Container(),
                 const SizedBox(
                   height: 32.0,
                 ),
