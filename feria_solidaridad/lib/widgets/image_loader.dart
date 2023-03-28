@@ -17,7 +17,10 @@ class ImageLoader extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           },
           errorWidget: (context, url, error) {
-            return Text("Image $url not found! ($error)");
+            return Image.asset(
+              kDefaultPlaceholderImage,
+              fit: BoxFit.cover,
+            );
           },
         );
       }
