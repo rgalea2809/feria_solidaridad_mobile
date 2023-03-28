@@ -44,7 +44,7 @@ class ProjectsList extends StatelessWidget {
           children: [
             getPageIndicator(state.numberOfPages, state.currentPage, context),
             Expanded(
-              child: state.currentProjects.isEmpty
+              child: state.isFetchingData
                   ? const Center(
                       child: CircularProgressIndicator(),
                     )
