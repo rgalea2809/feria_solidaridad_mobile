@@ -181,8 +181,8 @@ class ProjectListCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: SizedBox(
-        height: 350,
+      child: Container(
+        constraints: const BoxConstraints(maxHeight: 400),
         child: Card(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
