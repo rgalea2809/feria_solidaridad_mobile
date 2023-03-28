@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:feria_solidaridad/constants/theme_constants.dart';
 import 'package:feria_solidaridad/modules/home/model/images_response.dart';
 import 'package:feria_solidaridad/widgets/image_loader.dart';
 import "package:flutter/material.dart";
@@ -65,7 +66,7 @@ class _ImageGalleryScrollerState extends State<ImageGalleryScroller> {
             child: Container(
               margin: const EdgeInsets.all(8.0),
               decoration: BoxDecoration(
-                color: index % 2 == 0 ? Colors.red : Colors.blue,
+                color: kPrimaryColor,
                 borderRadius: BorderRadius.circular(20),
               ),
               child: GestureDetector(
